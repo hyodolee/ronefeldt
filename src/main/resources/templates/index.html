@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>로네펠트 티하우스 SINCE 1823</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Swiper 필수 CSS (bundle 제거 후 최소한만) -->
+<link rel="stylesheet" th:href="@{/css/product-actions.css}">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<div id="fp-dots"></div>
+<div id="social-bar">
+  <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+  <a href="#"><i class="fa-brands fa-instagram"></i></a>
+  <a href="#"><i class="fa-brands fa-youtube"></i></a>
+</div>
+
+<div id="fp-wrap"><div id="fp-inner">
+
+  <!-- SEC 0 -->
+  <div class="fp-sec" data-dark="0">
+    <div class="main-slider">
+      <div class="slide on" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_banner_a01_4_2.jpg')"><div class="slide-body"><div class="s-tag anim-top d1">이번달 15일 ~ 말일까지</div><h2 class="s-title anim-top d2">A U T H E N T I C I T Y</h2><p class="s-desc anim-top d3">200년을 이어온 차에 대한 진정성</p><a href="#" class="s-btn anim-top d4">MORE</a></div></div>
+      <div class="slide" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_banner_02_c.jpg')"><div class="slide-body"><div class="s-tag">#친환경 #최상품</div><h2 class="s-title">D E E P_M I L K_T E A</h2><p class="s-desc">나의 내면 깊은 곳에서 우러 나오는, 그윽한 향</p><a href="#" class="s-btn">MORE</a></div></div>
+      <div class="slide" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_banner_03_leaf.jpg')"><div class="slide-body"><div class="s-tag">#한정수량 #신상품</div><h2 class="s-title">N E W_I T E M</h2><p class="s-desc">신상품이 출시 되었습니다</p><a href="#" class="s-btn">MORE</a></div></div>
+      <div class="slide" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_banner_04-2.jpg')"><div class="slide-body"><div class="s-tag">#한정수량 #신상품</div><h2 class="s-title">B A Y_A N D_F I G</h2><p class="s-desc">로네펠트를 품은 향</p><a href="#" class="s-btn">MORE</a></div></div>
+      <div class="slide" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_banner_06.jpg')"><div class="slide-body"><div class="s-tag">#한정수량 #신상품</div><h2 class="s-title">M E M B E R S H I P</h2><p class="s-desc">멤버십가입으로 더많은 혜택을 누리세요</p><a href="#" class="s-btn">MORE</a></div></div>
+      <div class="slide" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_banner_a6_2.jpg')"><div class="slide-body"><div class="s-tag">#한정수량 #신상품</div><h2 class="s-title">just my cup of tea</h2><p class="s-desc">소수만 향유하던 로네펠트를 이제 모두에게</p><a href="#" class="s-btn">MORE</a></div></div>
+      <button class="s-arrow prev" id="sl-prev"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="s-arrow next" id="sl-next"><i class="fa-solid fa-chevron-right"></i></button>
+      <div class="slide-dots" id="sl-dots"></div>
+      <div class="s-counter" id="sl-counter">1 / 6</div>
+    </div>
+  </div>
+
+  <!-- SEC 1 -->
+  <div class="fp-sec" data-dark="0">
+    <div class="video-sec"><div class="v-inner">
+      <div class="v-sub anim-top d1">D E E P _ F L A V E R</div>
+      <h2 class="v-title anim-top d2">최신 영상을 소개합니다</h2>
+      <a href="#" class="v-more anim-top d3">MORE</a>
+      <div class="play-btn anim-top d4"><i class="fa-solid fa-play"></i></div>
+      <div class="v-since anim-top d5">TEA EXCELLENCE SINCE 1823</div>
+    </div></div>
+  </div>
+
+  <!-- SEC 2 -->
+  <div class="fp-sec" data-dark="1">
+    <div class="split-sec month-best-sec">
+      <div class="split-L" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_month_best_red.jpg')">
+        <div class="split-L-inner">
+          <div class="sl-tag anim-left d1">#인기상품</div>
+          <h2 class="sl-title anim-left d2">M O N T H<br>B E S T</h2>
+          <p class="sl-desc anim-left d3">이번달 가장 많이 판매된 상품들</p>
+        </div>
+      </div>
+      <div class="split-R-white">
+        <h2 class="r-title anim-right d1">B E S T I T E M</h2>
+        <div class="month-best-pages" id="month-best-pages"></div>
+        <div class="r-dots" id="month-best-dots"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEC 3 -->
+  <div class="fp-sec" data-dark="1">
+    <div class="product-sec">
+      <div class="pt-header">
+        <h2 class="pt-title anim-top d1">P R O D U C T</h2>
+        <div class="tab-nav anim-top d2" id="tab-nav"></div>
+      </div>
+      <div id="tab-panels" class="anim-bot d3"></div>
+      <div class="product-dots anim-bot d4" id="product-dots"></div>
+    </div>
+  </div>
+
+  <!-- SEC 4: CAMPAIGN -->
+  <div class="fp-sec" data-dark="1">
+    <div class="campaign-sec">
+      <div class="camp-header">
+        <h2 class="camp-title anim-top d1">C A M P A I G N</h2>
+      </div>
+      <div class="camp-swiper-wrap">
+        <div class="swiper camp-swiper" id="campSwiper">
+          <div class="swiper-wrapper" id="campSlides"></div>
+        </div>
+      </div>
+      <!-- 화살표: campaign-sec 기준 절대위치 -->
+      <div class="camp-prev"><i class="fa-solid fa-chevron-left"></i></div>
+      <div class="camp-next"><i class="fa-solid fa-chevron-right"></i></div>
+      <!-- 하단: 스크롤바 + 모두 보기 (실제 사이트와 동일 구조) -->
+      <div class="camp-bottom">
+        <div class="camp-bottom-inner">
+          <div class="camp-scrollbar" id="campScrollbar">
+            <div class="swiper-scrollbar-drag" id="campDrag"></div>
+          </div>
+          <a href="https://teehaus.co.kr/article/campaign-with-ronnefeldt/8/" class="camp-more-btn">모두 보기</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEC 5 -->
+  <div class="fp-sec" data-dark="1">
+    <div class="insta-sec">
+      <div class="insta-L">
+        <h2 class="insta-title anim-left d1">I N S T A G R A M</h2>
+        <p class="insta-handle anim-left d2"><a href="https://www.instagram.com/ronnefeldt_teahouse/" target="_blank" rel="noopener">@ronnefeldt_teahouse</a></p>
+      </div>
+      <div class="insta-R anim-right d2">
+        <iframe src="https://snapwidget.com/embed/1089328" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" title="Posts from Instagram"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEC 6 -->
+  <div class="fp-sec" data-dark="0">
+    <div class="full-img-sec" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_time_sale_teehaus_25.jpg')">
+      <div class="fi-inner"><h2 class="fi-title anim-top d1">T E A<br>C L A S S</h2><div class="fi-tag anim-top d2">#로네펠트 #티하우스 #티클레스</div><p class="fi-desc anim-top d3">2025년 상반기<br>티클레스 모집이 완료 되었습니다.</p><a href="#" class="fi-btn anim-top d4">MORE</a></div>
+    </div>
+  </div>
+
+  <!-- SEC 7 -->
+  <div class="fp-sec" data-dark="0">
+    <div class="full-img-sec" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_normal_banner_01.jpg')">
+      <div class="fi-inner"><h2 class="fi-title anim-top d1" style="font-size:clamp(2.4rem,5vw,4.5rem)">Ronnefeldt<br>200 YEAR</h2><p class="fi-desc anim-top d2">1823년 부터 오늘날까지 로네펠트의 200년 역사</p><div class="fi-tag anim-top d3">#1823 #200years #Ronnefeldt #history</div><a href="#" class="fi-btn anim-top d4">MORE</a></div>
+    </div>
+  </div>
+
+  <!-- SEC 8 -->
+  <div class="fp-sec" data-dark="0">
+    <div class="split-sec">
+      <div class="dbl-panel" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_double_banner_01_01_f.jpg')">
+        <div class="dbl-inner"><h2 class="dbl-title anim-left d1">LOCATION</h2><div class="dbl-sub anim-left d2">Ronnefeldt Tea House</div><div class="dbl-tag anim-left d3">#로네펠트티하우스 #위치 #지도</div><a href="#" class="dbl-btn anim-left d4">위치 보기</a></div>
+      </div>
+      <div class="dbl-panel" style="background-image:url('https://teehaus.co.kr/bs21/img/main/main_double_banner_01_02_f.jpg')">
+        <div class="dbl-inner"><h2 class="dbl-title anim-right d1">MAKE</h2><div class="dbl-sub anim-right d2">로네펠트 제품 생산 공정</div><div class="dbl-tag anim-right d3">#생산과정 #현장</div><div class="fi-play anim-right d4"><i class="fa-solid fa-play"></i></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEC 9 -->
+  <div class="fp-sec" data-dark="0">
+    <div class="full-img-sec" style="background-image:url('https://teehaus.co.kr/bs21/img/main/better-2.jpg');background-color:#c8cfc0">
+      <div class="fi-inner"><h2 class="fi-title anim-top d1">S H A R I N G_W A R M T H</h2><p class="fi-desc anim-top d2">따뜻한 차와 같이 온기를 나눔니다.</p><div class="fi-tag anim-top d3">#공유 #환경 #실천</div><div class="fi-play anim-top d4"><i class="fa-solid fa-play"></i></div></div>
+    </div>
+  </div>
+
+  <!-- SEC 10 FOOTER -->
+  <div class="fp-sec fp-footer" data-dark="1" data-footer="true">
+    <div th:replace="~{fragments/layout :: footer}"></div>
+  </div>
+
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.js"></script>
+<script th:src="@{/js/product-actions.js}"></script>
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

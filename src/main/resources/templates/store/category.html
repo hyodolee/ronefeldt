@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title th:text="|${category.title} - ${category.title} - Ronnefeldt Teehaus|">Store - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/product-actions.css}">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+</head>
+<body>
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header(${category.key}, true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="store-category-page">
+  <section class="category-visual" th:attr="aria-label=${category.title}">
+    <div class="category-banner" aria-hidden="true">
+      <span class="banner-image"
+            th:each="image, stat : ${category.bannerImages}"
+            th:classappend="${stat.index == 0} ? ' is-active'"
+            th:style="|background-image:url('${image}')|"></span>
+    </div>
+    <div class="category-inner">
+      <h1 th:text="${category.title}">Tea Set</h1>
+      <div class="category-meta reveal-up">
+        <p><strong th:text="${#lists.size(products)}">0</strong>&#44060;&#51032; &#49345;&#54408;&#51060; &#51080;&#49845;&#45768;&#45796;</p>
+        <div class="sort-wrap">
+          <nav class="sort-list" aria-label="&#49345;&#54408; &#51221;&#47148;">
+            <a href="#">&#49888;&#49345;&#54408;</a>
+            <a href="#">&#49345;&#54408;&#47749;</a>
+            <a href="#">&#45230;&#51008;&#44032;&#44201;</a>
+            <a href="#">&#45458;&#51008;&#44032;&#44201;</a>
+            <a href="#">&#51228;&#51312;&#49324;</a>
+            <a href="#">&#49324;&#50857;&#54980;&#44592;</a>
+          </nav>
+          <div class="view-icons" aria-label="&#49345;&#54408; &#48372;&#44592; &#48169;&#49885;">
+            <button type="button" class="view-toggle" data-view="list" aria-label="&#47532;&#49828;&#53944;&#54805; &#48372;&#44592;" aria-pressed="false">
+              <span class="list-icon" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="view-toggle is-active" data-view="grid" aria-label="&#44201;&#51088;&#54805; &#48372;&#44592;" aria-pressed="true">
+              <span class="grid-icon" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <section class="product-grid reveal-up" th:attr="aria-label=|${category.title} &#49345;&#54408; &#47785;&#47197;|">
+        <th:block th:each="product, stat : ${products}">
+          <article th:replace="~{fragments/layout :: productCard(${product}, ${stat.index * 120})}"></article>
+        </th:block>
+      </section>
+    </div>
+  </section>
+
+  <nav class="pagination" aria-label="&#54168;&#51060;&#51648;">
+    <button type="button" aria-label="&#51060;&#51204; &#54168;&#51060;&#51648;"><i class="fa-solid fa-chevron-left"></i></button>
+    <strong>1</strong>
+    <button type="button" aria-label="&#45796;&#51020; &#54168;&#51060;&#51648;"><i class="fa-solid fa-chevron-right"></i></button>
+  </nav>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<ul class="social-links" aria-label="SNS">
+  <li><a href="https://www.facebook.com/ronnefeldt1823/" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+  <li><a href="https://www.instagram.com/ronnefeldt_teahouse/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+  <li><a href="https://www.youtube.com/@MrSohansen" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a></li>
+</ul>
+
+<div class="quick-buttons" aria-label="&#48736;&#47480; &#47700;&#45684;">
+  <button type="button">Ch</button>
+  <button type="button" id="pageTop" aria-label="&#49345;&#45800;&#51004;&#47196; &#51060;&#46041;"><i class="fa-solid fa-arrow-up"></i></button>
+</div>
+
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<script th:src="@{/js/product-actions.js}"></script>
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+.prd-actions{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  display:flex;
+  opacity:0;
+  transform:translateY(8px);
+  transition:opacity .25s,transform .25s;
+  z-index:3;
+}
+.prd-card:hover .prd-actions,
+.product-image:hover .prd-actions,
+.product-image:focus-within .prd-actions{opacity:1;transform:translateY(0)}
+.prd-action{
+  width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;
+  border:0;border-left:1px solid #e5e5e5;
+  background:#fff;color:#111;
+  font-size:15px;
+  cursor:pointer;
+}
+.prd-action:first-child{border-left:0}
+.prd-action:hover{background:#111;color:#fff}
+.prd-action.liked{color:#d9152f}
