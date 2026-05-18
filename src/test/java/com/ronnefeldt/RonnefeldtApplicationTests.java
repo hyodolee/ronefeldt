@@ -48,4 +48,12 @@ class RonnefeldtApplicationTests {
             .bodyText()
             .contains("Loose Tea", "category-visual", "product-grid");
     }
+
+    @Test
+    void actuatorHealthEndpointLoads() {
+        assertThat(mvc.get().uri("/actuator/health"))
+            .hasStatusOk()
+            .bodyText()
+            .contains("\"status\":\"UP\"");
+    }
 }
