@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>문의 작성 - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/community.css}">
+</head>
+<body class="community-body">
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('inquiry', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="community-page">
+  <section class="community-panel write-panel">
+    <nav class="board-path" aria-label="현재 위치">
+      <a th:href="@{/}">Home</a>
+      <a th:href="@{/board/product/6/}">문의하기</a>
+      <strong>글쓰기</strong>
+    </nav>
+
+    <div class="board-title">
+      <h1>문의 작성</h1>
+      <p>상품 및 이용 관련 문의를 작성해 주세요.</p>
+    </div>
+
+    <p class="board-error" th:if="${error}" th:text="${error}">제목을 입력해 주세요.</p>
+
+    <form class="inquiry-form" th:action="@{/board/product/write.html}" method="post">
+      <input type="hidden" name="board_no" value="6">
+      <div class="form-row">
+        <label for="productId">상품 선택</label>
+        <select id="productId" name="productId">
+          <option value="">상품 선택 안함</option>
+          <option th:each="product : ${products}"
+                  th:value="${product.id()}"
+                  th:selected="${selectedProductId != null and selectedProductId == product.id()}"
+                  th:text="|[${product.categoryName()}] ${product.name()}|">상품명</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label for="title">제목 <em>*</em></label>
+        <input id="title" type="text" name="title" th:value="${title}" maxlength="200" required>
+      </div>
+
+      <div class="form-row">
+        <label for="content">문의 내용 <em>*</em></label>
+        <textarea id="content" name="content" rows="12" required th:text="${content}"></textarea>
+      </div>
+
+      <div class="write-actions">
+        <button type="submit" class="board-button primary">등록</button>
+        <a class="board-button" th:href="@{/board/product/6/}">취소</a>
+      </div>
+    </form>
+  </section>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+</body>
+</html>

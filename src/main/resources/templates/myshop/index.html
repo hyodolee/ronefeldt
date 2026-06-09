@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>마이 쇼핑 - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+<link rel="stylesheet" th:href="@{/css/account.css}">
+</head>
+<body class="account-body basket-body basket-logged-page myshop-body">
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('myshop', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="myshop-page">
+  <section class="myshop-panel" aria-labelledby="myshopTitle">
+    <div class="myshop-path">
+      <a th:href="@{/}">홈</a>
+      <span>마이 쇼핑</span>
+    </div>
+
+    <h1 id="myshopTitle">마이 쇼핑</h1>
+
+    <ul class="myshop-bankbook" aria-label="나의 쇼핑 혜택">
+      <li>
+        <strong>가용적립금</strong>
+        <span th:text="|${#numbers.formatInteger(mileage, 0, 'COMMA')}원|">0원</span>
+        <a href="#">조회</a>
+      </li>
+      <li>
+        <strong>총적립금</strong>
+        <span th:text="|${#numbers.formatInteger(totalMileage, 0, 'COMMA')}원|">0원</span>
+      </li>
+      <li>
+        <strong>사용적립금</strong>
+        <span th:text="|${#numbers.formatInteger(usedMileage, 0, 'COMMA')}원|">0원</span>
+      </li>
+      <li>
+        <strong>총주문</strong>
+        <span th:text="|${#numbers.formatInteger(totalOrderAmount, 0, 'COMMA')}원 (${totalOrderCount}회)|">0원 (0회)</span>
+      </li>
+      <li>
+        <strong>쿠폰</strong>
+        <span th:text="|${couponCount}개|">0개</span>
+        <a href="#">조회</a>
+      </li>
+    </ul>
+
+    <section class="myshop-order-state" aria-labelledby="orderStateTitle">
+      <div class="myshop-section-title">
+        <h2 id="orderStateTitle">나의 주문처리 현황 <span>(최근 <em>3개월</em> 기준)</span></h2>
+      </div>
+      <div class="myshop-state-box">
+        <ul class="myshop-order-steps">
+          <li><strong>입금전</strong><a href="#">0</a></li>
+          <li><strong>배송준비중</strong><a href="#">0</a></li>
+          <li><strong>배송중</strong><a href="#">0</a></li>
+          <li><strong>배송완료</strong><a href="#">0</a></li>
+        </ul>
+        <ul class="myshop-cs-state">
+          <li><strong>취소 :</strong><a href="#">0</a></li>
+          <li><strong>교환 :</strong><a href="#">0</a></li>
+          <li><strong>반품 :</strong><a href="#">0</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <ul class="myshop-menu-grid" aria-label="마이쇼핑 바로가기">
+      <li>
+        <a href="#">
+          <strong>Order</strong>
+          <span>주문내역 조회</span>
+          <p>고객님께서 주문하신 상품의<br>주문내역을 확인하실 수 있습니다.</p>
+        </a>
+      </li>
+      <li>
+        <a th:href="@{/order/basket.html}">
+          <strong>Cart</strong>
+          <span>장바구니 (<b th:text="${cartCount}">0</b>)</span>
+          <p>장바구니에 담으신<br>상품의 목록을 보여드립니다.</p>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <strong>Wishlist</strong>
+          <span>관심 상품</span>
+          <p>관심상품으로 등록하신<br>상품의 목록을 보여드립니다.</p>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <strong>Recent</strong>
+          <span>최근 본 상품 (0)</span>
+          <p>고객님께서 최근 본<br>상품의 목록을 보여드립니다.</p>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <strong>Mileage</strong>
+          <span>적립금</span>
+          <p>적립금은 상품 구매 시<br>사용하실 수 있습니다.</p>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <strong>Coupon</strong>
+          <span>쿠폰</span>
+          <p>고객님이 보유하고 계신<br>쿠폰내역을 보여드립니다.</p>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <strong>Address</strong>
+          <span>배송 주소록 관리</span>
+          <p>자주 사용하는 배송지를 등록하고<br>관리하실 수 있습니다.</p>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <strong>Board</strong>
+          <span>게시물 관리</span>
+          <p>고객님께서 작성하신 게시물을<br>관리하는 공간입니다.</p>
+        </a>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>

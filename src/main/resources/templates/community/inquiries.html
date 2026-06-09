@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>문의하기 - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/community.css}">
+</head>
+<body class="community-body">
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('inquiry', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="community-page">
+  <section class="community-panel">
+    <nav class="board-path" aria-label="현재 위치">
+      <a th:href="@{/}">Home</a>
+      <span>Community</span>
+      <strong>문의하기</strong>
+    </nav>
+
+    <div class="board-title">
+      <h1>문의하기</h1>
+      <p>상품 및 쇼핑몰 이용에 대한 문의를 남겨주세요.</p>
+    </div>
+
+    <p class="board-message" th:if="${message}" th:text="${message}">문의가 등록되었습니다.</p>
+    <p class="board-error" th:if="${error}" th:text="${error}">오류 메시지</p>
+
+    <div class="board-table-wrap">
+      <table class="board-table">
+        <caption>문의하기 게시글 목록</caption>
+        <colgroup>
+          <col class="col-no">
+          <col class="col-product">
+          <col>
+          <col class="col-writer">
+          <col class="col-date">
+          <col class="col-status">
+        </colgroup>
+        <thead>
+        <tr>
+          <th scope="col">번호</th>
+          <th scope="col">상품정보</th>
+          <th scope="col">제목</th>
+          <th scope="col">작성자</th>
+          <th scope="col">작성일</th>
+          <th scope="col">상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(inquiries)}">
+          <td colspan="6" class="board-empty">게시물이 없습니다.</td>
+        </tr>
+        <tr th:each="inquiry, stat : ${inquiries}">
+          <td th:text="${#lists.size(inquiries) - stat.index}">1</td>
+          <td class="board-product" th:text="${inquiry.displayProductName()}">-</td>
+          <td class="board-subject">
+            <a th:href="@{/board/product/read.html(board_no=6,no=${inquiry.id()})}" th:text="${inquiry.title()}">문의 제목</a>
+          </td>
+          <td th:text="${inquiry.writer()}">회원</td>
+          <td th:text="${inquiry.displayDate()}">2026-06-08</td>
+          <td>
+            <span class="board-status" th:classappend="${inquiry.answered()} ? ' answered'" th:text="${inquiry.displayStatus()}">답변대기</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="board-actions">
+      <a class="board-button primary" th:href="@{/board/product/write.html(board_no=6)}">글쓰기</a>
+    </div>
+
+    <form class="board-search" th:action="@{/board/product/6/}" method="get">
+      <select aria-label="검색 조건">
+        <option>제목</option>
+        <option>내용</option>
+        <option>작성자</option>
+      </select>
+      <input type="text" name="keyword" placeholder="검색어를 입력하세요">
+      <button type="submit">검색</button>
+    </form>
+  </section>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+</body>
+</html>

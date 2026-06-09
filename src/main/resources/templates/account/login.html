@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>&#47196;&#44536;&#51064; - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+<link rel="stylesheet" th:href="@{/css/account.css}">
+</head>
+<body class="account-body">
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('login', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="login-page">
+  <section class="login-panel" aria-labelledby="loginTitle">
+    <h1 id="loginTitle">&#47196;&#44536;&#51064;</h1>
+
+    <p class="account-error" th:if="${error}" th:text="${error}">로그인 오류</p>
+
+    <form class="login-form" th:action="@{/member/login.html}" method="post">
+      <label class="sr-only" for="memberId">&#50500;&#51060;&#46356;</label>
+      <input id="memberId" name="memberId" type="text" th:value="${memberId}" placeholder="&#50500;&#51060;&#46356;" autocomplete="username">
+
+      <label class="sr-only" for="memberPassword">&#48708;&#48128;&#48264;&#54840;</label>
+      <input id="memberPassword" name="memberPassword" type="password" placeholder="&#48708;&#48128;&#48264;&#54840;" autocomplete="current-password">
+
+      <label class="secure-login">
+        <input type="checkbox" name="secureLogin" checked>
+        <span><i class="fa-solid fa-lock" aria-hidden="true"></i>&#48372;&#50504;&#51217;&#49549;</span>
+      </label>
+
+      <button type="submit" class="login-submit">&#47196;&#44536;&#51064;</button>
+    </form>
+
+    <nav class="login-links" aria-label="&#54924;&#50896; &#46020;&#50880; &#47700;&#45684;">
+      <a href="#">&#50500;&#51060;&#46356; &#52286;&#44592;</a>
+      <a href="#">&#48708;&#48128;&#48264;&#54840; &#52286;&#44592;</a>
+      <a th:href="@{/member/join.html}">&#54924;&#50896;&#44032;&#51077;</a>
+    </nav>
+
+    <a class="naver-login" th:href="@{/oauth/naver/login}">
+      <strong>N</strong>
+      <span>&#45348;&#51060;&#48260; &#47196;&#44536;&#51064;</span>
+    </a>
+  </section>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>

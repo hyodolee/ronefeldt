@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>장바구니 - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+<link rel="stylesheet" th:href="@{/css/account.css}">
+</head>
+<body class="account-body basket-body basket-logged-page">
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('basket', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="basket-page">
+  <section class="basket-panel" aria-labelledby="basketTitle">
+    <h1 id="basketTitle">장바구니</h1>
+
+    <p class="basket-message" th:if="${cartMessage}" th:text="${cartMessage}">안내 메시지</p>
+
+    <div class="basket-benefit" th:if="${session.loginUser != null}">
+      <strong>혜택정보</strong>
+      <span>가용적립금 : <b>0원</b></span>
+      <span>쿠폰 : <b>0개</b></span>
+    </div>
+
+    <div class="basket-tabs" role="tablist" aria-label="배송상품">
+      <a role="tab" th:href="@{/order/basket.html}" th:classappend="${delvtype != 'B'} ? 'active'">국내배송상품 (<span th:text="${domesticCount}">0</span>)</a>
+      <a role="tab" th:href="@{/order/basket.html(delvtype='B')}" th:classappend="${delvtype == 'B'} ? 'active'">해외배송상품 (<span th:text="${overseasCount}">0</span>)</a>
+    </div>
+
+    <div class="basket-empty" th:if="${#lists.isEmpty(cartItems)}">
+      <p>장바구니가 비어 있습니다.</p>
+    </div>
+
+    <th:block th:if="${!#lists.isEmpty(cartItems)}">
+      <section class="basket-items" aria-label="장바구니 상품 목록">
+        <div class="basket-item-head">
+          <span>선택</span>
+          <span>상품정보</span>
+          <span>수량</span>
+          <span>상품금액</span>
+          <span>관리</span>
+        </div>
+
+        <article class="basket-item" th:each="item : ${cartItems}">
+          <label class="basket-check">
+            <input type="checkbox" form="orderPrepareForm" name="cartItemIds" th:value="${item.id}" checked>
+          </label>
+          <a class="basket-item-image" th:href="@{/product/{slug}/{id}/category/1/display/1/(slug=${#strings.toLowerCase(#strings.replace(item.productName, ' ', '-'))},id=${item.productId})}">
+            <img th:src="${item.imageUrl}" th:alt="${item.productName}">
+          </a>
+          <div class="basket-item-info">
+            <a th:text="${item.productName}" th:href="@{/product/{slug}/{id}/category/1/display/1/(slug=${#strings.toLowerCase(#strings.replace(item.productName, ' ', '-'))},id=${item.productId})}">Product</a>
+            <p th:text="${item.productSummary}">단독구매상품</p>
+            <small th:text="${item.deliveryType == 'OVERSEAS'} ? '해외배송' : '국내배송'">국내배송</small>
+          </div>
+          <div class="basket-item-qty">
+            <form th:action="@{/cart/items/update}" method="post" class="basket-qty-form">
+              <input type="hidden" name="cartItemId" th:value="${item.id}">
+              <input type="hidden" name="delvtype" th:value="${delvtype}">
+              <input type="number" name="quantity" min="1" th:value="${item.quantity}">
+              <button type="submit">변경</button>
+            </form>
+          </div>
+          <div class="basket-item-price">
+            <strong th:text="${item.formattedTotalPrice()}">25,000원</strong>
+            <span th:text="|단가 ${item.formattedUnitPrice()}|">단가 25,000원</span>
+          </div>
+          <div class="basket-item-manage">
+            <form th:action="@{/cart/items/delete}" method="post">
+              <input type="hidden" name="cartItemId" th:value="${item.id}">
+              <input type="hidden" name="delvtype" th:value="${delvtype}">
+              <button type="submit">삭제</button>
+            </form>
+          </div>
+        </article>
+
+        <div class="basket-total">
+          <span>총 상품금액</span>
+          <strong th:text="|${#numbers.formatInteger(totalAmount, 0, 'COMMA')}원|">0원</strong>
+        </div>
+      </section>
+
+      <div class="basket-actions">
+        <form id="orderPrepareForm" th:action="@{/order/prepare}" method="post" class="basket-order-actions">
+          <input type="hidden" name="delvtype" th:value="${delvtype}">
+          <button type="submit" name="mode" value="all">전체상품주문</button>
+          <button type="submit" name="mode" value="selected">선택상품주문</button>
+        </form>
+        <a th:href="@{/category/tea-set/24/}">쇼핑계속하기</a>
+      </div>
+    </th:block>
+
+    <div class="basket-actions" th:if="${#lists.isEmpty(cartItems)}">
+      <div class="basket-order-actions">
+        <button type="button">전체상품주문</button>
+        <button type="button">선택상품주문</button>
+      </div>
+      <a th:href="@{/category/tea-set/24/}">쇼핑계속하기</a>
+    </div>
+  </section>
+
+  <section class="basket-panel guide-panel" aria-labelledby="guideTitle">
+    <h2 id="guideTitle">이용안내</h2>
+    <div class="guide-block">
+      <h3>장바구니 이용안내</h3>
+      <ol>
+        <li>선택하신 상품의 수량을 변경하시려면 수량변경 후 [변경] 버튼을 누르시면 됩니다.</li>
+        <li>[쇼핑계속하기] 버튼을 누르시면 쇼핑을 계속 하실 수 있습니다.</li>
+        <li>장바구니와 관심상품을 이용하여 원하시는 상품만 주문하거나 관심상품으로 등록하실 수 있습니다.</li>
+        <li>해외배송 상품과 국내배송 상품은 함께 결제하실 수 없으니 장바구니 별로 따로 결제해 주시기 바랍니다.</li>
+        <li>해외배송 가능 상품의 경우 국내배송 장바구니에 담았다가 해외배송 장바구니로 이동하여 결제하실 수 있습니다.</li>
+      </ol>
+    </div>
+    <div class="guide-block">
+      <h3>무이자할부 이용안내</h3>
+      <ol>
+        <li>상품별 무이자할부 혜택을 받으시려면 무이자할부 상품만 선택하여 주문하기 버튼을 눌러 주문/결제 하시면 됩니다.</li>
+        <li>전체상품주문 버튼을 누르시면 장바구니의 구분없이 선택된 모든 상품에 대한 주문/결제가 이루어집니다.</li>
+        <li>단, 전체 상품을 주문/결제하실 경우, 상품별 무이자할부 혜택을 받으실 수 없습니다.</li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>

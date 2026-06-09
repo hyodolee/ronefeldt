@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>후기 작성 - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/community.css}">
+</head>
+<body class="community-body">
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('inquiry', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="community-page">
+  <section class="community-panel write-panel">
+    <nav class="board-path" aria-label="현재 위치">
+      <a th:href="@{/}">Home</a>
+      <strong>후기쓰기</strong>
+    </nav>
+    <div class="board-title">
+      <h1>후기 작성</h1>
+      <p>리뷰 저장 기능은 다음 단계에서 연결할 예정입니다.</p>
+    </div>
+    <form class="inquiry-form" action="#" method="post">
+      <div class="form-row">
+        <label for="reviewTitle">제목 <em>*</em></label>
+        <input id="reviewTitle" type="text" name="title" required>
+      </div>
+      <div class="form-row">
+        <label for="reviewContent">후기 내용 <em>*</em></label>
+        <textarea id="reviewContent" name="content" rows="12" required></textarea>
+      </div>
+      <div class="write-actions">
+        <a class="board-button primary" href="javascript:history.back()">확인</a>
+        <a class="board-button" href="javascript:history.back()">취소</a>
+      </div>
+    </form>
+  </section>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+</body>
+</html>

@@ -441,6 +441,65 @@ document.getElementById('sl-prev').onclick=()=>{clearInterval(stimer);slideTo((s
 document.getElementById('sl-next').onclick=()=>{clearInterval(stimer);slideTo((sc+1)%stotal);stimer=setInterval(()=>slideTo((sc+1)%stotal),5000)};
 
 // ── FULLPAGE ──
+// VIDEO SECTION CONTROLS
+const teaVideo=document.getElementById('teaVideo');
+const videoPlayToggle=document.getElementById('videoPlayToggle');
+const videoSoundToggle=document.getElementById('videoSoundToggle');
+const videoSection=document.querySelector('.video-sec');
+let videoOverlayTimer;
+function setIcon(btn, icon){
+  if(btn) btn.innerHTML='<i class="fa-solid '+icon+'"></i>';
+}
+function syncVideoControls(){
+  if(!teaVideo) return;
+  const isPaused=teaVideo.paused;
+  const isMuted=teaVideo.muted;
+  videoPlayToggle?.classList.toggle('is-playing',!isPaused);
+  setIcon(videoPlayToggle,isPaused?'fa-play':'fa-pause');
+  if(videoPlayToggle) videoPlayToggle.setAttribute('aria-label',isPaused?'동영상 재생':'동영상 일시정지');
+  [videoSoundToggle].forEach(btn=>{
+    if(!btn) return;
+    btn.classList.toggle('is-muted',isMuted);
+    setIcon(btn,isMuted?'fa-volume-xmark':'fa-volume-high');
+    btn.setAttribute('aria-label',isMuted?'음소거 해제':'음소거');
+  });
+}
+videoPlayToggle?.addEventListener('click',async()=>{
+  if(!teaVideo) return;
+  if(teaVideo.paused){
+    try{await teaVideo.play()}catch(e){}
+  }else{
+    teaVideo.pause();
+  }
+  syncVideoControls();
+});
+function toggleVideoMute(){
+  if(!teaVideo) return;
+  teaVideo.muted=!teaVideo.muted;
+  if(!teaVideo.paused) teaVideo.play().catch(()=>{});
+  syncVideoControls();
+}
+videoSoundToggle?.addEventListener('click',toggleVideoMute);
+function showVideoOverlays(){
+  if(!videoSection) return;
+  videoSection.classList.add('is-control-visible');
+  clearTimeout(videoOverlayTimer);
+  videoOverlayTimer=setTimeout(()=>{
+    videoSection.classList.remove('is-control-visible');
+  },1400);
+}
+videoSection?.addEventListener('mouseenter',showVideoOverlays);
+videoSection?.addEventListener('mousemove',showVideoOverlays);
+videoSection?.addEventListener('touchstart',showVideoOverlays,{passive:true});
+videoSection?.addEventListener('mouseleave',()=>{
+  clearTimeout(videoOverlayTimer);
+  videoSection.classList.remove('is-control-visible');
+});
+teaVideo?.addEventListener('play',syncVideoControls);
+teaVideo?.addEventListener('pause',syncVideoControls);
+teaVideo?.addEventListener('volumechange',syncVideoControls);
+syncVideoControls();
+
 const fpInner=document.getElementById('fp-inner');
 const fpDots=document.getElementById('fp-dots');
 const headerEl=document.getElementById('header');

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>&#54924;&#50896;&#44032;&#51077; - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+<link rel="stylesheet" th:href="@{/css/account.css}">
+</head>
+<body class="account-body">
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('join', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="join-page">
+  <section class="join-panel" aria-labelledby="joinTitle">
+    <h1 id="joinTitle">&#54924;&#50896;&#44032;&#51077;</h1>
+    <p class="join-intro">&#50500;&#51060;&#46356;&#50752; &#48708;&#48128;&#48264;&#54840; &#51077;&#47141;&#51060; &#44480;&#52270;&#51004;&#49884;&#51424;?</p>
+    <p class="join-sub">&#44036;&#54200;&#54620; &#44032;&#51077;&#51004;&#47196; &#47196;&#45348;&#54172;&#53944; &#54924;&#50896;&#54812;&#53469;&#51012; &#45572;&#47140;&#48372;&#49464;&#50836;.</p>
+
+    <a class="naver-login join-naver" th:href="@{/oauth/naver/login}">
+      <strong>N</strong>
+      <span>&#45348;&#51060;&#48260; &#44036;&#54200; &#54924;&#50896;&#44032;&#51077;</span>
+    </a>
+
+    <div class="join-divider"><span>or</span></div>
+
+    <p class="account-error" th:if="${error}" th:text="${error}">가입 오류</p>
+
+    <form class="join-form" th:action="@{/member/join.html}" method="post">
+      <h2>ID/PW &#51077;&#47141;&#51060; &#54596;&#50836;&#54620; &#54924;&#50896;&#44032;&#51077;</h2>
+
+      <label for="joinMemberId">&#50500;&#51060;&#46356; <em>*</em></label>
+      <input id="joinMemberId" name="memberId" type="text" th:value="${memberId}" placeholder="&#50689;&#47928;&#49548;&#47928;&#51088;/&#49688;&#51088;, 4~16&#51088;" autocomplete="username">
+
+      <label for="joinPassword">&#48708;&#48128;&#48264;&#54840; <em>*</em></label>
+      <input id="joinPassword" name="password" type="password" placeholder="10~16&#51088;, &#50689;&#47928;/&#49688;&#51088;/&#53945;&#49688;&#47928;&#51088; &#51312;&#54633;" autocomplete="new-password">
+
+      <label for="joinPasswordConfirm">&#48708;&#48128;&#48264;&#54840; &#54869;&#51064; <em>*</em></label>
+      <input id="joinPasswordConfirm" name="passwordConfirm" type="password" placeholder="&#48708;&#48128;&#48264;&#54840; &#51116;&#51077;&#47141;" autocomplete="new-password">
+
+      <label for="joinName">&#51060;&#47492; <em>*</em></label>
+      <input id="joinName" name="name" type="text" th:value="${name}" placeholder="&#51060;&#47492;" autocomplete="name">
+
+      <label for="joinEmail">&#51060;&#47700;&#51068; <em>*</em></label>
+      <input id="joinEmail" name="email" type="email" th:value="${email}" placeholder="email@example.com" autocomplete="email">
+
+      <div class="join-agreement">
+        <label>
+          <input type="checkbox" name="agreeTerms">
+          <span>&#51060;&#50857;&#50557;&#44288; &#48143; &#44060;&#51064;&#51221;&#48372; &#49688;&#51665;&#50640; &#46041;&#51032;&#54633;&#45768;&#45796;.</span>
+        </label>
+      </div>
+
+      <button type="submit" class="join-submit">&#54924;&#50896;&#44032;&#51077;</button>
+    </form>
+
+    <p class="join-login">&#51060;&#48120; &#54924;&#50896;&#51060;&#49888;&#44032;&#50836;? <a th:href="@{/member/login.html}">&#47196;&#44536;&#51064;</a></p>
+  </section>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+<script th:src="@{/js/store.js}"></script>
+</body>
+</html>

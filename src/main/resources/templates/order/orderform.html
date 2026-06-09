@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주문서 작성 - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+<link rel="stylesheet" th:href="@{/css/account.css}">
+</head>
+<body class="account-body basket-body basket-logged-page">
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('order', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="basket-page order-form-page">
+  <section class="basket-panel order-form-panel" aria-labelledby="orderTitle">
+    <h1 id="orderTitle">주문서 작성</h1>
+
+    <div class="order-summary-box">
+      <dl>
+        <div>
+          <dt>주문번호</dt>
+          <dd th:text="${order.orderNo}">R20260521000000000</dd>
+        </div>
+        <div>
+          <dt>주문상태</dt>
+          <dd th:text="${order.orderStatus}">CREATED</dd>
+        </div>
+      </dl>
+    </div>
+
+    <section class="basket-items order-items" aria-label="주문 상품 목록">
+      <div class="basket-item-head order-item-head">
+        <span>상품정보</span>
+        <span>수량</span>
+        <span>주문금액</span>
+      </div>
+      <article class="basket-item order-item" th:each="item : ${order.items}">
+        <div class="basket-item-info">
+          <a th:text="${item.productName}">Product</a>
+          <p th:text="|단가 ${item.formattedUnitPrice()}|">단가 25,000원</p>
+        </div>
+        <div class="basket-item-qty" th:text="${item.quantity}">1</div>
+        <div class="basket-item-price">
+          <strong th:text="${item.formattedTotalPrice()}">25,000원</strong>
+        </div>
+      </article>
+      <div class="basket-total">
+        <span>총 결제 예정 금액</span>
+        <strong th:text="${order.formattedTotalAmount()}">0원</strong>
+      </div>
+    </section>
+
+    <section class="order-form-section">
+      <h2>배송 정보</h2>
+      <div class="order-fields">
+        <label>받는 사람 <input type="text" placeholder="이름"></label>
+        <label>연락처 <input type="text" placeholder="010-0000-0000"></label>
+        <label>우편번호 <input type="text" placeholder="우편번호"></label>
+        <label class="wide">주소 <input type="text" placeholder="기본 주소"></label>
+        <label class="wide">상세주소 <input type="text" placeholder="상세 주소"></label>
+        <label class="wide">배송메모 <input type="text" placeholder="배송메모를 입력하세요"></label>
+      </div>
+    </section>
+
+    <p class="payment-notice" th:if="${!portOneConfigured}">
+      PortOne 환경변수 설정이 없어 결제창을 열 수 없습니다.
+    </p>
+    <p id="paymentMessage" class="payment-message" aria-live="polite"></p>
+
+    <div class="basket-actions order-submit-actions">
+      <a th:href="@{/order/basket.html}">장바구니로</a>
+      <button
+        id="portonePayButton"
+        type="button"
+        th:disabled="${!portOneConfigured}"
+        th:data-order-id="${order.id}"
+        th:data-payment-id="${paymentId}"
+        th:data-store-id="${portOneStoreId}"
+        th:data-channel-key="${portOneChannelKey}"
+        th:data-pay-method="${portOnePayMethod}"
+        th:data-easy-pay-provider="${portOneEasyPayProvider}"
+        th:data-order-name="${orderName}"
+        th:data-total-amount="${order.totalAmount}"
+        th:data-customer-email="${session.loginUser != null ? session.loginUser.email : ''}"
+        th:data-customer-name="${session.loginUser != null ? session.loginUser.displayName() : ''}">
+        결제하기
+      </button>
+    </div>
+  </section>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+<script th:src="@{/js/portone-payment.js}"></script>
+</body>
+</html>

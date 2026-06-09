@@ -40,3 +40,8 @@ out/
 .env
 .env.*
 !.env.example
+
+### Local certificates / secrets ###
+certs/
+*.pem
+*.p12

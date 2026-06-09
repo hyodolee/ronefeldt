@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title th:text="|${inquiry.title()} - 문의하기|">문의 상세 - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/community.css}">
+</head>
+<body class="community-body">
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('inquiry', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="community-page">
+  <section class="community-panel write-panel">
+    <nav class="board-path" aria-label="현재 위치">
+      <a th:href="@{/}">Home</a>
+      <a th:href="@{/board/product/6/}">문의하기</a>
+      <strong>상세보기</strong>
+    </nav>
+
+    <div class="board-title">
+      <h1>문의하기</h1>
+      <p>등록된 문의 내용을 확인합니다.</p>
+    </div>
+
+    <p class="board-error" th:if="${error}" th:text="${error}">오류 메시지</p>
+
+    <article class="inquiry-detail">
+      <header>
+        <h2 th:text="${inquiry.title()}">문의 제목</h2>
+        <dl>
+          <div>
+            <dt>작성자</dt>
+            <dd th:text="${inquiry.writer()}">회원</dd>
+          </div>
+          <div>
+            <dt>작성일</dt>
+            <dd th:text="${inquiry.displayDate()}">2026-06-08</dd>
+          </div>
+          <div>
+            <dt>상품정보</dt>
+            <dd th:text="${inquiry.displayProductName()}">-</dd>
+          </div>
+          <div>
+            <dt>상태</dt>
+            <dd th:text="${inquiry.displayStatus()}">답변대기</dd>
+          </div>
+        </dl>
+      </header>
+      <div class="inquiry-content" th:text="${inquiry.content()}">문의 내용</div>
+      <section class="inquiry-answer" th:if="${inquiry.answered()}">
+        <h3>답변</h3>
+        <p>관리자 답변 영역입니다.</p>
+      </section>
+    </article>
+
+    <div class="write-actions">
+      <a class="board-button primary" th:if="${canEdit}" th:href="@{/board/product/modify.html(board_no=6,no=${inquiry.id()})}">수정</a>
+      <a class="board-button" th:href="@{/board/product/6/}">목록</a>
+    </div>
+  </section>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+</body>
+</html>

@@ -10,10 +10,10 @@
 
 <ul th:fragment="navItems(active)" class="nav-list">
   <li><a href="#">BRAND</a><ul class="sub-menu"><li><a href="#">Teehaus</a></li><li><a href="#">History</a></li><li><a href="#">ESG</a></li><li><a href="#">Location</a></li><li><a href="#">Membership</a></li></ul></li>
-  <li><a th:href="@{/category/tea-set/24/}">STORE</a><ul class="sub-menu"><li><a th:classappend="${active == 'tea-set'} ? 'active'" th:href="@{/category/tea-set/24/}">Tea Set</a></li><li><a th:classappend="${active == 'loose-tea'} ? 'active'" th:href="@{/store/loose-tea}">Loose Tea</a></li><li><a th:classappend="${active == 'tea-caddy'} ? 'active'" th:href="@{/store/tea-caddy}">Tea-Caddy</a></li><li><a th:classappend="${active == 'leafcup'} ? 'active'" th:href="@{/store/leafcup}">LeafCup</a></li><li><a th:classappend="${active == 'teavelope'} ? 'active'" th:href="@{/store/teavelope}">Teavelope</a></li><li><a th:classappend="${active == 'tea-ware'} ? 'active'" th:href="@{/store/tea-ware}">Tea Ware</a></li><li><a th:classappend="${active == 'life-style'} ? 'active'" th:href="@{/store/life-style}">Life Style</a></li></ul></li>
+  <li><a th:href="@{/category/tea-set/24/}">STORE</a><ul class="sub-menu"><li><a th:classappend="${active == 'tea-set'} ? 'active'" th:href="@{/category/tea-set/24/}">Tea Set</a></li><li><a th:classappend="${active == 'loose-tea'} ? 'active'" th:href="@{/category/loose-tea/46/}">Loose Tea</a></li><li><a th:classappend="${active == 'tea-caddy'} ? 'active'" th:href="@{/category/tea-caddy/49/}">Tea-Caddy</a></li><li><a th:classappend="${active == 'leafcup'} ? 'active'" th:href="@{/category/leafcup/48/}">LeafCup</a></li><li><a th:classappend="${active == 'teavelope'} ? 'active'" th:href="@{/category/teavelope/47/}">Teavelope</a></li><li><a th:classappend="${active == 'tea-ware'} ? 'active'" th:href="@{/category/tea-ware/26/}">Tea Ware</a></li><li><a th:classappend="${active == 'life-style'} ? 'active'" th:href="@{/category/life-style/25/}">Life Style</a></li></ul></li>
   <li><a href="#">GALLERY</a><ul class="sub-menu"><li><a href="#">People</a></li><li><a href="#">Place</a></li><li><a href="#">Moments</a></li></ul></li>
   <li><a href="#">CAMPAIGN</a></li>
-  <li><a href="#">COMMUNITY</a><ul class="sub-menu"><li><a href="#">News</a></li><li><a href="#">Q&amp;A</a></li><li><a href="#">Get in Touch</a></li><li><a href="#">Review</a></li><li><a href="#">&#47928;&#51032;&#54616;&#44592;</a></li></ul></li>
+  <li><a th:href="@{/board/product/6/}">COMMUNITY</a><ul class="sub-menu"><li><a href="#">News</a></li><li><a href="#">Q&amp;A</a></li><li><a href="#">Get in Touch</a></li><li><a href="#">Review</a></li><li><a th:classappend="${active == 'inquiry'} ? 'active'" th:href="@{/board/product/6/}">&#47928;&#51032;&#54616;&#44592;</a></li></ul></li>
 </ul>
 
 <div id="header" class="site-header" th:fragment="header(active, showSearch)">
@@ -23,7 +23,7 @@
   <a class="logo" th:href="@{/}" aria-label="Ronnefeldt home"><img src="https://teehaus.co.kr/bs21/img/layout/logo_b_3.png" alt="Ronnefeldt"></a>
   <div class="header-right">
     <a th:if="${showSearch}" href="#none" id="searchOpen">Search</a><span th:if="${showSearch}" class="util-sep">|</span>
-    <a th:if="${showSearch}" href="https://teehaus.co.kr/order/basket.html">Cart ( 0 )</a><span th:if="${showSearch}" class="util-sep">|</span>
+    <a th:if="${showSearch}" th:href="@{/order/basket.html}">Cart ( <span th:text="${cartCount != null ? cartCount : 0}">0</span> )</a><span th:if="${showSearch}" class="util-sep">|</span>
     <button class="hamburger menu-button" id="menuOpen" aria-label="&#47700;&#45684; &#50676;&#44592;"><i class="fa-solid fa-bars"></i></button>
   </div>
 </div>
@@ -35,17 +35,17 @@
 
 <article th:fragment="productCard(product, delay)" class="product-card" th:style="|--delay:${delay}ms|">
   <div class="product-image">
-    <a class="product-thumb" th:href="${product.detailUrl}">
-      <img th:src="${product.imageUrl}" th:alt="${product.name}">
-      <span class="sold-out">SOLD OUT</span>
+    <a class="product-thumb" th:classappend="${product.soldOut()} ? ' is-sold-out'" th:href="${product.detailUrl()}">
+      <img th:src="${product.displayImageUrl()}" th:alt="${product.name}">
+      <span class="sold-out" th:if="${product.soldOut()}">SOLD OUT</span>
     </a>
-    <div th:replace="~{fragments/layout :: productActions(${product.detailUrl})}"></div>
+    <div th:replace="~{fragments/layout :: productActions(${product.detailUrl()})}"></div>
   </div>
   <div class="product-info">
-    <a class="product-name" th:href="${product.detailUrl}" th:text="${product.name}">Product</a>
-    <p class="product-summary" th:text="${product.summary}">&#49345;&#54408; &#49444;&#47749;</p>
+    <a class="product-name" th:href="${product.detailUrl()}" th:text="${product.name}">Product</a>
+    <p class="product-summary" th:text="${product.displaySummary()}">&#49345;&#54408; &#49444;&#47749;</p>
     <span class="review">&#47532;&#48624; 0</span>
-    <strong class="price" th:text="${product.price}">0&#50896;</strong>
+    <strong class="price" th:text="${product.formattedPrice()}">0&#50896;</strong>
   </div>
 </article>
 
@@ -72,12 +72,14 @@
   <div class="bs_cover side-cover" id="slideMenuCover"></div>
   <button type="button" class="slide-menu-close side-close" id="slideMenuClose" aria-label="&#47700;&#45684; &#45803;&#44592;"></button>
   <div class="bs_wrap side-panel">
-    <div class="slide-user">
-      <span class="slide-point side-point"><a href="https://teehaus.co.kr/member/join.html">&#54924;&#50896; 3,000P</a></span>
-      <a href="https://teehaus.co.kr/member/login.html" class="slide-account">&#54924;&#50896;&#44228;&#51221;</a>
-      <a href="https://teehaus.co.kr/order/basket.html" class="slide-link">&#51109;&#48148;&#44396;&#45768;</a>
-      <a href="https://teehaus.co.kr/myshop/order/list.html" class="slide-link">&#51452;&#47928;&#51312;&#54924;</a>
-      <a href="https://teehaus.co.kr/myshop/index.html" class="slide-link">&#47560;&#51060;&#49660;&#54609;</a>
+    <div class="slide-user" th:with="loginUser=${session.loginUser}">
+      <span th:if="${loginUser == null}" class="slide-point side-point"><a th:href="@{/member/join.html}">&#54924;&#50896; 3,000P</a></span>
+      <span th:if="${loginUser != null}" class="slide-point side-point"><a href="#" th:text="${loginUser.displayName()}">Member</a></span>
+      <a th:if="${loginUser == null}" th:href="@{/member/login.html}" class="slide-account">&#54924;&#50896;&#44228;&#51221;</a>
+      <a th:if="${loginUser != null}" th:href="@{/member/logout}" class="slide-account">&#47196;&#44536;&#50500;&#50883;</a>
+      <a th:href="@{/order/basket.html}" class="slide-link">&#51109;&#48148;&#44396;&#45768;</a>
+      <a href="#" class="slide-link">&#51452;&#47928;&#51312;&#54924;</a>
+      <a th:href="@{/myshop/index.html}" class="slide-link">&#47560;&#51060;&#49660;&#54609;</a>
     </div>
     <div class="slide-link-group">
       <a href="https://teehaus.co.kr/coupon/coupon_zone.html" class="slide-link">&#53216;&#54256;&#51316;</a>
@@ -89,7 +91,7 @@
       </div>
     </div>
     <div class="slide-bottom-banner side-banner" id="slideBottomBanner">
-      <a th:href="@{/category/tea-set/24/}">&#54000;&#53364;&#47112;&#49828; 25&#45380;1&#44592; &#54924;&#50896; &#47784;&#51665; &#50724;&#54536;!!</a>
+      <a th:href="@{/member/join.html}">&#54000;&#53364;&#47112;&#49828; 25&#45380;1&#44592; &#54924;&#50896; &#47784;&#51665; &#50724;&#54536;!!</a>
       <button type="button" class="slide-banner-close" id="slideBannerClose" aria-label="&#54616;&#45800; &#48176;&#45320; &#45803;&#44592;">&times;</button>
     </div>
   </div>

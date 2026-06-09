@@ -47,13 +47,21 @@
 
   <!-- SEC 1 -->
   <div class="fp-sec" data-dark="0">
-    <div class="video-sec"><div class="v-inner">
+    <div class="video-sec">
+      <video id="teaVideo" class="video-bg" th:src="@{/video/tea.mp4}" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+      <div class="v-inner">
       <div class="v-sub anim-top d1">D E E P _ F L A V E R</div>
       <h2 class="v-title anim-top d2">최신 영상을 소개합니다</h2>
       <a href="#" class="v-more anim-top d3">MORE</a>
-      <div class="play-btn anim-top d4"><i class="fa-solid fa-play"></i></div>
+      <div class="video-center-controls anim-top d4" aria-label="&#46041;&#50689;&#49345; &#52968;&#53944;&#47204;">
+        <span class="video-side-btn" aria-hidden="true"><i class="fa-solid fa-backward-step"></i></span>
+        <button type="button" class="video-control-btn play-btn is-playing" id="videoPlayToggle" aria-label="&#46041;&#50689;&#49345; &#51068;&#49884;&#51221;&#51648;"><i class="fa-solid fa-pause"></i></button>
+        <span class="video-side-btn" aria-hidden="true"><i class="fa-solid fa-forward-step"></i></span>
+      </div>
       <div class="v-since anim-top d5">TEA EXCELLENCE SINCE 1823</div>
-    </div></div>
+      </div>
+      <button type="button" class="video-sound-toggle is-muted" id="videoSoundToggle" aria-label="&#51020;&#49548;&#44144; &#54644;&#51228;"><i class="fa-solid fa-volume-xmark"></i></button>
+    </div>
   </div>
 
   <!-- SEC 2 -->

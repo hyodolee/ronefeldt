@@ -1,0 +1,28 @@
+package com.ronnefeldt.model;
+
+import java.util.List;
+
+public record ProductPage(
+    List<Product> products,
+    long totalElements,
+    int page,
+    int size,
+    int totalPages
+) {
+
+    public boolean hasPrevious() {
+        return page > 1;
+    }
+
+    public boolean hasNext() {
+        return page < totalPages;
+    }
+
+    public int previousPage() {
+        return Math.max(1, page - 1);
+    }
+
+    public int nextPage() {
+        return Math.min(totalPages, page + 1);
+    }
+}

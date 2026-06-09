@@ -169,15 +169,25 @@ img{display:block;max-width:100%}
 .s-arrow.prev{left:12px}.s-arrow.next{right:34px}
 
 /* ════════════ SEC 1 – VIDEO ════════════ */
-.video-sec{width:100%;height:100%;background:url('https://teehaus.co.kr/bs21/img/main/main_video-2.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;color:#fff;position:relative}
-.video-sec::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.42)}
-.v-inner{position:relative;z-index:2}
+.video-sec{width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;color:#fff;position:relative;overflow:hidden}
+.video-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.video-sec::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.42);z-index:1}
+.v-inner{position:relative;z-index:2;opacity:0;pointer-events:none;transition:opacity .65s ease}
 .v-sub{font-size:10px;letter-spacing:.25em;color:rgba(255,255,255,.6);margin-bottom:14px}
 .v-title{font-size:clamp(1.6rem,3vw,2.6rem);font-weight:300;letter-spacing:.16em;margin-bottom:20px}
 .v-more{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.7);border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:3px}
-.play-btn{width:58px;height:58px;border:1.5px solid rgba(255,255,255,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:26px auto 0;cursor:pointer;transition:border-color .2s,transform .2s}
-.play-btn:hover{border-color:#fff;transform:scale(1.08)}
-.play-btn i{color:rgba(255,255,255,.8);font-size:18px;margin-left:3px}
+.video-center-controls{display:flex;align-items:center;justify-content:center;gap:62px;margin:26px auto 0}
+.video-control-btn{border:0;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(0,0,0,.32);color:rgba(255,255,255,.82);box-shadow:0 8px 24px rgba(0,0,0,.12);transition:background .25s,transform .25s,color .25s}
+.video-control-btn:hover{background:rgba(0,0,0,.5);color:#fff;transform:scale(1.08)}
+.play-btn{width:58px;height:58px;background:rgba(255,255,255,.92);color:#8b512d}
+.play-btn:hover{background:#fff;color:#8b512d}
+.play-btn i{font-size:22px}
+.play-btn .fa-play{margin-left:3px}
+.video-side-btn{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.28);color:rgba(255,255,255,.72);font-size:14px}
+.video-sound-toggle{position:absolute;left:50%;bottom:30px;z-index:2;width:50px;height:50px;border:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.25);color:#fff;font-size:18px;cursor:pointer;transform:translateX(-50%);opacity:0;pointer-events:none;transition:opacity .65s ease,background .25s,transform .25s,color .25s}
+.video-sound-toggle:hover{background:rgba(255,255,255,.38);transform:translateX(-50%) scale(1.08)}
+.video-sec.is-control-visible .v-inner,
+.video-sec.is-control-visible .video-sound-toggle{opacity:1;pointer-events:auto}
 .v-since{font-size:10px;letter-spacing:.28em;color:rgba(255,255,255,.3);margin-top:30px}
 
 /* ════════════ SPLIT (shared) ════════════ */

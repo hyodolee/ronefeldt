@@ -1,109 +1,241 @@
 # Ronnefeldt Teehaus Portfolio
 
-Ronnefeldt Teehaus 쇼핑몰 화면을 Spring Boot와 Thymeleaf 기반으로 재구성한 개인 포트폴리오 프로젝트입니다.
-단순 화면 구현뿐 아니라 Sentry 에러 모니터링, Actuator 헬스 체크, Nginx Blue/Green 무중단 배포 구조까지 고려해 운영 관점의 백엔드 프로젝트로 확장하고 있습니다.
+독일 프리미엄 티 브랜드 **Ronnefeldt Teehaus** 쇼핑몰을 참고해 만든 Spring Boot 기반 개인 포트폴리오 프로젝트입니다.
 
-## 주요 목표
+기존 정적 HTML 화면을 Spring MVC + Thymeleaf 구조로 전환하고, 상품 조회, 회원, 장바구니, 주문, 결제, 문의 게시판, 외부 로그인, 모니터링, 원격 DB 연동까지 쇼핑몰 백엔드 흐름을 직접 구현하는 것을 목표로 했습니다.
 
-- 기존 HTML 프론트 화면을 Spring Boot MVC + Thymeleaf 구조로 전환
-- 공통 레이아웃을 Thymeleaf fragment로 분리해 재사용성 확보
-- Store 카테고리 페이지를 공통 템플릿 기반으로 구성
-- Sentry를 이용한 서버 에러 모니터링 구성
-- Actuator 기반 헬스 체크 추가
-- Nginx Blue/Green 무중단 배포 설계 문서화
+## 프로젝트 주제
 
-## 기술 스택
+프리미엄 티 쇼핑몰의 핵심 기능을 구현한 커머스 웹 애플리케이션입니다.
 
-| 구분 | 사용 기술 |
+- 메인 랜딩 페이지
+- Store 상품 카테고리와 상품 상세 페이지
+- 회원가입 / 로그인 / 네이버 OAuth 로그인
+- 장바구니 / 주문서 / 결제 완료 흐름
+- 상품 문의 게시판
+- 마이쇼핑 페이지
+- 운영 관점의 Sentry 모니터링, Actuator 헬스체크, Aiven MySQL 연동
+- Nginx Blue/Green 무중단 배포 설계
+
+## 사용 기술
+
+| 구분 | 기술 |
 | --- | --- |
 | Language | Java 21 |
-| Backend | Spring Boot 4.0.6 |
+| Framework | Spring Boot 4.0.6 |
 | View | Thymeleaf |
+| Persistence | Spring Data JPA |
+| Database | MySQL(Aiven), H2(local/test) |
 | Build | Gradle |
+| Auth | Local Login, Naver OAuth |
+| Payment | PortOne |
 | Monitoring | Sentry, Spring Boot Actuator |
 | Deployment Plan | Nginx Reverse Proxy, Blue/Green Deployment |
+| Frontend | HTML, CSS, JavaScript, Thymeleaf Fragment |
 
 ## 주요 기능
 
-### 화면
+### 1. 메인 페이지
 
-- 메인 랜딩 페이지
-- Store 카테고리 공통 페이지
-- Tea Set 상품 리스트
-- 상품 그리드/리스트 보기 전환
-- 상품 이미지 hover 액션
-- 검색 오버레이
-- 햄버거 슬라이딩 메뉴
-- 공통 푸터
+- Ronnefeldt 스타일의 랜딩 화면 구현
+- 공통 헤더, 좌측 내비게이션, 검색 오버레이, 햄버거 메뉴, 푸터 구성
+- 두 번째 섹션에 `tea.mp4` 배경 영상 적용
+- 영상 영역 마우스 진입/이탈에 따른 컨트롤 노출 처리
 
-### 운영 기능
+### 2. Store 상품 페이지
 
-- Sentry 예외 수집
-- 로컬/dev 전용 Sentry 테스트 엔드포인트
-- Actuator 헬스 체크
-- Nginx Blue/Green 배포 예시 설정
-- 배포 롤백 전략 문서화
+- Store 하위 카테고리 구현
+  - Tea Set
+  - Loose Tea
+  - Tea-Caddy
+  - LeafCup
+  - Teavelope
+  - Tea Ware
+  - Life Style
+- 상품 카드 공통 컴포넌트화
+- 그리드 / 리스트 보기 전환
+- 정렬 UI
+- 상품 hover 시 관심상품 / 새창 열기 액션 노출
+- Tea Set은 원본 사이트처럼 배경 이미지가 있는 레이아웃 적용
+- 나머지 카테고리는 일반 상품 목록 레이아웃과 페이징 적용
+
+### 3. 상품 상세 페이지
+
+- 상품 이미지, 가격, 배송 정보, 수량 선택, 총 금액 계산
+- 장바구니 담기
+- 찜 버튼 UI
+- 스크롤 시 오른쪽 구매 패널 고정 처리
+- DETAIL / GUIDE / REVIEW / Q&A / RELATED 섹션 구성
+- 상품 문의 작성 버튼 연동
+
+### 4. 회원 기능
+
+- 일반 회원가입
+- 일반 로그인
+- PBKDF2 기반 비밀번호 해시 저장
+- 네이버 OAuth 로그인
+- 로그인 상태에 따라 햄버거 메뉴 내용 변경
+- 마이쇼핑 페이지 접근 제어
+
+### 5. 장바구니 / 주문 / 결제
+
+- 로그인 사용자 기준 장바구니 생성
+- 상품 상세 페이지에서 장바구니 담기
+- 헤더의 Cart 수량 실시간 반영
+- 국내배송 / 해외배송 탭
+- 주문서 생성
+- PortOne 결제창 호출
+- 결제 성공 후 주문 상태를 `PAID`로 변경
+- 결제 완료된 장바구니 아이템 삭제
+- 결제 내역 저장
+
+### 6. 커뮤니티 문의 게시판
+
+- 문의 목록
+- 문의 작성
+- 문의 상세 보기
+- 작성자 본인 수정
+- 상품 상세 페이지에서 Q&A 작성 페이지로 이동
+
+### 7. 운영 기능
+
+- Sentry 예외 모니터링 연동
+- 로컬 테스트용 Sentry 엔드포인트
+- Actuator 헬스체크
+- Aiven MySQL 연결 상태 확인용 엔드포인트
+- HikariCP 커넥션 풀 설정
+- Nginx Blue/Green 배포 설계 문서 제공
+
+## 주요 URL
+
+| 화면 | URL |
+| --- | --- |
+| 메인 | `/` |
+| Tea Set | `/category/tea-set/24/` |
+| Loose Tea | `/category/loose-tea/46/` |
+| 상품 상세 | `/product/rich-aroma-leafcup/18/category/24/display/1/` |
+| 로그인 | `/member/login.html` |
+| 회원가입 | `/member/join.html` |
+| 장바구니 | `/order/basket.html` |
+| 주문서 | `/order/orderform.html` |
+| 마이쇼핑 | `/myshop/index.html` |
+| 상품 문의 | `/board/product/6/` |
+| Actuator Health | `/actuator/health` |
 
 ## 프로젝트 구조
 
 ```text
 src/main/java/com/ronnefeldt
 ├─ RonnefeldtApplication.java
-└─ controller
-   ├─ MainController.java
-   ├─ StoreController.java
-   └─ DevSentryController.java
+├─ controller
+│  ├─ MainController.java
+│  ├─ StoreController.java
+│  ├─ CartController.java
+│  ├─ PaymentController.java
+│  ├─ CommunityController.java
+│  ├─ NaverOAuthController.java
+│  ├─ DevSentryController.java
+│  └─ AivenDbStatusController.java
+├─ entity
+│  ├─ MemberEntity.java
+│  ├─ ProductEntity.java
+│  ├─ CategoryEntity.java
+│  ├─ CartEntity.java
+│  ├─ CartItemEntity.java
+│  ├─ OrderEntity.java
+│  ├─ OrderItemEntity.java
+│  ├─ PaymentEntity.java
+│  └─ InquiryEntity.java
+├─ repository/jpa
+├─ service
+└─ model
 
 src/main/resources
-├─ application.properties
-├─ application-local.properties
 ├─ templates
-│  ├─ index.html
 │  ├─ fragments/layout.html
-│  └─ store/category.html
-└─ static
-   ├─ css
-   │  ├─ style.css
-   │  ├─ store.css
-   │  ├─ product-actions.css
-   │  ├─ search-overlay.css
-   │  └─ side-menu.css
-   └─ js
-      ├─ main.js
-      ├─ store.js
-      ├─ product-actions.js
-      ├─ search-overlay.js
-      └─ side-menu.js
+│  ├─ index.html
+│  ├─ store
+│  ├─ account
+│  ├─ order
+│  ├─ community
+│  └─ myshop
+├─ static
+│  ├─ css
+│  ├─ js
+│  └─ video/tea.mp4
+├─ application.properties
+└─ application-aiven.properties
 
 docs
+├─ schema.sql
+├─ teehaus-store-seed.sql
+├─ ronnefeldt-erd-simple.drawio
+├─ ronnefeldt-erd-simple.svg
 └─ blue-green-deployment.md
-
-deploy/nginx
-└─ ronnefeldt-blue-green.conf.example
 ```
 
-## 공통 컴포넌트
+## DB 설계 요약
 
-Thymeleaf fragment를 사용해 반복되는 UI를 공통화했습니다.
+핵심 테이블은 커머스 흐름을 기준으로 구성했습니다.
 
-- Header
-- Left navigation
-- Search overlay
-- Side menu
-- Footer
-- Product card
-- Product hover actions
+| 영역 | 테이블 |
+| --- | --- |
+| 회원 | `members` |
+| 상품 | `categories`, `products` |
+| 장바구니 | `carts`, `cart_items` |
+| 주문 | `orders`, `order_items` |
+| 결제 | `payments` |
+| 커뮤니티 | `inquiries` |
 
-상품 카드는 `fragments/layout.html`의 `productCard(product, delay)` fragment로 관리합니다.
-Store 카테고리 페이지는 상품 데이터만 넘기면 같은 카드 UI를 반복 렌더링합니다.
+ERD와 SQL은 `docs` 디렉터리에 정리되어 있습니다.
+
+- `docs/schema.sql`
+- `docs/teehaus-store-seed.sql`
+- `docs/ronnefeldt-erd-simple.drawio`
+- `docs/ronnefeldt-erd-simple.svg`
+
+## 외부 연동
+
+### Aiven MySQL
+
+운영 DB는 Aiven MySQL을 기준으로 연결합니다.
+
+```properties
+spring.datasource.url=${AIVEN_DB_URL:...}
+spring.datasource.username=${AIVEN_DB_USERNAME:avnadmin}
+spring.datasource.password=${AIVEN_DB_PASSWORD:}
+```
+
+인증서와 DB 비밀번호는 Git에 올리지 않고 로컬 환경변수 또는 별도 인증서 파일로 관리합니다.
+
+### Naver OAuth
+
+```properties
+naver.oauth.client-id=${NAVER_CLIENT_ID:}
+naver.oauth.client-secret=${NAVER_CLIENT_SECRET:}
+naver.oauth.redirect-uri=${NAVER_REDIRECT_URI:http://localhost:8080/oauth/naver/callback}
+```
+
+### PortOne
+
+```properties
+portone.store-id=${PORTONE_STORE_ID:}
+portone.channel-key=${PORTONE_CHANNEL_KEY:}
+portone.api-secret=${PORTONE_API_SECRET:}
+portone.pay-method=${PORTONE_PAY_METHOD:EASY_PAY}
+```
+
+### Sentry
+
+```properties
+sentry.dsn=${SENTRY_DSN:}
+sentry.environment=${SENTRY_ENVIRONMENT:local}
+sentry.traces-sample-rate=${SENTRY_TRACES_SAMPLE_RATE:0.1}
+```
 
 ## 로컬 실행
 
-```bash
-./gradlew bootRun
-```
-
-Windows PowerShell:
+Windows PowerShell 기준:
 
 ```powershell
 .\gradlew.bat bootRun
@@ -115,69 +247,34 @@ Windows PowerShell:
 http://localhost:8080
 ```
 
-## Sentry 설정
+특정 프로필 실행:
 
-Sentry DSN은 코드에 직접 저장하지 않고 환경변수로 주입합니다.
-
-```properties
-sentry.dsn=${SENTRY_DSN:}
-sentry.environment=${SENTRY_ENVIRONMENT:local}
-sentry.release=${SENTRY_RELEASE:${spring.application.name}:local}
-sentry.traces-sample-rate=${SENTRY_TRACES_SAMPLE_RATE:0.1}
-sentry.send-default-pii=false
+```powershell
+.\gradlew.bat bootRun --args="--spring.profiles.active=local"
 ```
 
-로컬 실행 시 필요한 환경변수:
+## 테스트
 
-```text
-SPRING_PROFILES_ACTIVE=local
-SENTRY_DSN={Sentry에서 발급받은 DSN}
+```powershell
+.\gradlew.bat test
 ```
 
-`SENTRY_DSN` 값은 GitHub에 커밋하지 않습니다.
+현재 테스트는 다음 흐름을 확인합니다.
 
-## Sentry 로컬 테스트
+- 메인 페이지 렌더링
+- Store 카테고리 렌더링
+- 상품 상세 페이지 렌더링
+- 회원가입 / 로그인
+- 장바구니 담기
+- 헤더 Cart 수량 반영
+- 주문 생성
+- 결제 완료 후 장바구니 비우기
+- 문의 게시판 작성 / 상세 / 수정
+- Actuator Health
 
-`local` 또는 `dev` 프로필에서만 테스트 엔드포인트가 활성화됩니다.
+## 배포 설계
 
-상태 확인:
-
-```text
-http://localhost:8080/dev/sentry-status
-```
-
-수동 이벤트 전송:
-
-```text
-http://localhost:8080/dev/sentry-capture
-```
-
-예외 발생 테스트:
-
-```text
-http://localhost:8080/dev/sentry-test
-```
-
-`/dev/sentry-test`는 의도적으로 예외를 발생시키므로 Whitelabel Error Page가 표시되는 것이 정상입니다.
-Sentry Issues 화면에 `Sentry local test error`가 수집되면 연동 성공입니다.
-
-## Health Check
-
-Actuator를 사용해 애플리케이션 상태를 확인합니다.
-
-```text
-http://localhost:8080/actuator/health
-```
-
-정상 응답:
-
-```json
-{"status":"UP"}
-```
-
-## Blue/Green 배포 전략
-
-이 프로젝트는 Nginx Reverse Proxy 앞단에서 Spring Boot 앱을 2개 포트로 번갈아 띄우는 Blue/Green 배포를 기준으로 설계했습니다.
+무중단 배포는 Nginx Reverse Proxy 기반 Blue/Green 방식을 기준으로 설계했습니다.
 
 ```text
 User -> Nginx -> Spring Boot
@@ -188,46 +285,24 @@ green : 127.0.0.1:8082
 
 배포 흐름:
 
-1. 현재 버전은 8081에서 서비스
-2. 새 버전을 8082에 실행
-3. `/actuator/health`로 새 버전 상태 확인
-4. 정상이면 Nginx가 8082를 바라보도록 변경
-5. 문제 발생 시 Nginx를 다시 8081로 전환해 롤백
+1. 현재 버전은 blue 또는 green 중 하나에서 서비스
+2. 새 버전을 비활성 포트에 배포
+3. `/actuator/health`로 정상 여부 확인
+4. Nginx upstream을 새 버전으로 전환
+5. 문제 발생 시 이전 포트로 되돌려 롤백
 
-자세한 내용:
+관련 문서:
 
-- [Blue/Green Deployment 문서](docs/blue-green-deployment.md)
-- [Nginx 예시 설정](deploy/nginx/ronnefeldt-blue-green.conf.example)
-
-## 테스트
-
-```bash
-./gradlew test
-```
-
-Windows PowerShell:
-
-```powershell
-.\gradlew.bat test
-```
-
-## Git 보안 메모
-
-다음 파일은 로컬 환경 정보와 민감 값 보호를 위해 Git에 올리지 않습니다.
-
-```gitignore
-.vscode/
-.env
-.env.*
-```
-
-Sentry DSN, 로컬 실행 설정, 개인 환경변수는 저장소에 커밋하지 않습니다.
+- `docs/blue-green-deployment.md`
+- `deploy/nginx/ronnefeldt-blue-green.conf.example`
 
 ## 포트폴리오 포인트
 
-- Spring Boot MVC 기반 쇼핑몰 화면 전환
-- Thymeleaf fragment를 활용한 UI 재사용 구조
-- Sentry 기반 서버 예외 모니터링
-- Actuator 기반 운영 헬스 체크
-- Nginx Blue/Green 무중단 배포 설계
-- 환경변수 기반 운영 설정 관리
+- 정적 HTML 화면을 Spring Boot MVC + Thymeleaf 구조로 전환
+- Thymeleaf Fragment를 이용한 공통 UI 재사용
+- JPA 기반 커머스 도메인 모델 구성
+- 장바구니 → 주문서 → 결제 → 장바구니 정리까지 실제 쇼핑몰 흐름 구현
+- Naver OAuth, PortOne, Sentry, Aiven MySQL 등 외부 서비스 연동 경험 반영
+- Actuator, HikariCP, Blue/Green 배포 설계 등 운영 관점 기능 포함
+- 테스트 코드로 주요 사용자 흐름 검증
+

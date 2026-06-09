@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주문 완료 - Ronnefeldt Teehaus</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/search-overlay.css}">
+<link rel="stylesheet" th:href="@{/css/side-menu.css}">
+<link rel="stylesheet" th:href="@{/css/store.css}">
+<link rel="stylesheet" th:href="@{/css/account.css}">
+</head>
+<body class="account-body basket-body basket-logged-page">
+<div th:replace="~{fragments/layout :: topBanner}"></div>
+<div th:replace="~{fragments/layout :: header('order', true)}"></div>
+<div th:replace="~{fragments/layout :: searchOverlay}"></div>
+
+<main class="basket-page order-form-page">
+  <section class="basket-panel order-complete-panel" aria-labelledby="completeTitle">
+    <h1 id="completeTitle">주문 완료</h1>
+    <p class="order-complete-message">결제가 정상적으로 확인되었습니다.</p>
+    <div class="order-summary-box">
+      <dl>
+        <div>
+          <dt>주문번호</dt>
+          <dd th:text="${order.orderNo}">R20260521000000000</dd>
+        </div>
+        <div>
+          <dt>주문상태</dt>
+          <dd th:text="${order.orderStatus}">PAID</dd>
+        </div>
+        <div>
+          <dt>결제금액</dt>
+          <dd th:text="${order.formattedTotalAmount()}">25,000원</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="basket-actions order-submit-actions">
+      <a th:href="@{/}">메인으로</a>
+      <a th:href="@{/category/tea-set/24/}">쇼핑 계속하기</a>
+    </div>
+  </section>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: sideMenu}"></div>
+
+<script th:src="@{/js/search-overlay.js}"></script>
+<script th:src="@{/js/side-menu.js}"></script>
+</body>
+</html>

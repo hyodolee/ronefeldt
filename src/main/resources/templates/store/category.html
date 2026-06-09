@@ -17,8 +17,8 @@
 <div th:replace="~{fragments/layout :: searchOverlay}"></div>
 
 <main class="store-category-page">
-  <section class="category-visual" th:attr="aria-label=${category.title}">
-    <div class="category-banner" aria-hidden="true">
+  <section class="category-visual" th:classappend="${category.hasBanner()} ? ' has-banner' : ' no-banner'" th:attr="aria-label=${category.title}">
+    <div class="category-banner" th:if="${category.hasBanner()}" aria-hidden="true">
       <span class="banner-image"
             th:each="image, stat : ${category.bannerImages}"
             th:classappend="${stat.index == 0} ? ' is-active'"
@@ -27,7 +27,7 @@
     <div class="category-inner">
       <h1 th:text="${category.title}">Tea Set</h1>
       <div class="category-meta reveal-up">
-        <p><strong th:text="${#lists.size(products)}">0</strong>&#44060;&#51032; &#49345;&#54408;&#51060; &#51080;&#49845;&#45768;&#45796;</p>
+        <p><strong th:text="${productPage.totalElements}">0</strong>&#44060;&#51032; &#49345;&#54408;&#51060; &#51080;&#49845;&#45768;&#45796;</p>
         <div class="sort-wrap">
           <nav class="sort-list" aria-label="&#49345;&#54408; &#51221;&#47148;">
             <a href="#">&#49888;&#49345;&#54408;</a>
@@ -56,10 +56,21 @@
     </div>
   </section>
 
-  <nav class="pagination" aria-label="&#54168;&#51060;&#51648;">
-    <button type="button" aria-label="&#51060;&#51204; &#54168;&#51060;&#51648;"><i class="fa-solid fa-chevron-left"></i></button>
-    <strong>1</strong>
-    <button type="button" aria-label="&#45796;&#51020; &#54168;&#51060;&#51648;"><i class="fa-solid fa-chevron-right"></i></button>
+  <nav class="pagination" aria-label="&#54168;&#51060;&#51648;" th:if="${productPage.totalPages > 0}">
+    <a class="page-arrow"
+       th:classappend="${!productPage.hasPrevious()} ? ' is-disabled'"
+       th:href="${productPage.hasPrevious()} ? |${category.path}?page=${productPage.previousPage()}| : '#'"
+       aria-label="&#51060;&#51204; &#54168;&#51060;&#51648;"><i class="fa-solid fa-chevron-left"></i></a>
+    <span class="page-numbers">
+      <a th:each="pageNo : ${#numbers.sequence(1, productPage.totalPages)}"
+         th:href="|${category.path}?page=${pageNo}|"
+         th:classappend="${pageNo == productPage.page()} ? ' active'"
+         th:text="${pageNo}">1</a>
+    </span>
+    <a class="page-arrow"
+       th:classappend="${!productPage.hasNext()} ? ' is-disabled'"
+       th:href="${productPage.hasNext()} ? |${category.path}?page=${productPage.nextPage()}| : '#'"
+       aria-label="&#45796;&#51020; &#54168;&#51060;&#51648;"><i class="fa-solid fa-chevron-right"></i></a>
   </nav>
 </main>
 

@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1320" viewBox="0 0 1800 1320">
+  <defs>
+    <style>
+      .bg { fill: #fbfaf8; }
+      .table { fill: #fff; stroke: #222; stroke-width: 2; }
+      .head { fill: #f5f1eb; stroke: #222; stroke-width: 2; }
+      .title { font: 700 22px Georgia, "Times New Roman", serif; fill: #111; }
+      .field { font: 18px Georgia, "Times New Roman", serif; fill: #111; }
+      .note { font: 15px Arial, sans-serif; fill: #555; }
+      .line { fill: none; stroke: #333; stroke-width: 2; }
+      .key { font-weight: 700; }
+    </style>
+    <marker id="crow" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M 12 7 L 2 2 M 12 7 L 2 12 M 12 7 L 2 7" stroke="#333" stroke-width="1.8" fill="none"/>
+    </marker>
+    <marker id="one" markerWidth="10" markerHeight="14" refX="8" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M 3 2 L 3 12 M 7 2 L 7 12" stroke="#333" stroke-width="1.8" fill="none"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1800" height="1320"/>
+  <text class="title" x="60" y="54">Ronnefeldt Shopping Mall ERD</text>
+  <text class="note" x="60" y="82">Conceptual database design for member, product, cart, order, payment, membership benefits, and search.</text>
+
+  <!-- MEMBERS -->
+  <g id="members">
+    <rect class="table" x="60" y="130" width="290" height="310"/>
+    <rect class="head" x="60" y="130" width="290" height="54"/>
+    <text class="title" x="205" y="164" text-anchor="middle">members</text>
+    <text class="field" x="82" y="216">PK id : bigint</text>
+    <text class="field" x="82" y="246">FK grade_id : bigint</text>
+    <text class="field" x="82" y="276">email : varchar</text>
+    <text class="field" x="82" y="306">name : varchar</text>
+    <text class="field" x="82" y="336">nickname : varchar</text>
+    <text class="field" x="82" y="366">role : varchar</text>
+    <text class="field" x="82" y="396">status : varchar</text>
+    <text class="field" x="82" y="426">created_at : datetime</text>
+  </g>
+
+  <!-- MEMBER GRADES -->
+  <g id="member_grades">
+    <rect class="table" x="420" y="130" width="310" height="250"/>
+    <rect class="head" x="420" y="130" width="310" height="54"/>
+    <text class="title" x="575" y="164" text-anchor="middle">member_grades</text>
+    <text class="field" x="442" y="216">PK id : bigint</text>
+    <text class="field" x="442" y="246">grade_code : varchar</text>
+    <text class="field" x="442" y="276">grade_name : varchar</text>
+    <text class="field" x="442" y="306">point_rate : decimal</text>
+    <text class="field" x="442" y="336">monthly_coupon_count : int</text>
+    <text class="field" x="442" y="366">free_shipping : boolean</text>
+  </g>
+
+  <!-- SOCIAL ACCOUNTS -->
+  <g id="social_accounts">
+    <rect class="table" x="60" y="500" width="330" height="250"/>
+    <rect class="head" x="60" y="500" width="330" height="54"/>
+    <text class="title" x="225" y="534" text-anchor="middle">social_accounts</text>
+    <text class="field" x="82" y="586">PK id : bigint</text>
+    <text class="field" x="82" y="616">FK member_id : bigint</text>
+    <text class="field" x="82" y="646">provider : varchar</text>
+    <text class="field" x="82" y="676">provider_user_id : varchar</text>
+    <text class="field" x="82" y="706">email : varchar</text>
+    <text class="field" x="82" y="736">created_at : datetime</text>
+  </g>
+
+  <!-- BENEFITS -->
+  <g id="benefits">
+    <rect class="table" x="430" y="500" width="320" height="250"/>
+    <rect class="head" x="430" y="500" width="320" height="54"/>
+    <text class="title" x="590" y="534" text-anchor="middle">point_histories</text>
+    <text class="field" x="452" y="586">PK id : bigint</text>
+    <text class="field" x="452" y="616">FK member_id : bigint</text>
+    <text class="field" x="452" y="646">FK order_id : bigint</text>
+    <text class="field" x="452" y="676">type : varchar</text>
+    <text class="field" x="452" y="706">amount : int</text>
+    <text class="field" x="452" y="736">created_at : datetime</text>
+  </g>
+
+  <g id="coupons">
+    <rect class="table" x="60" y="820" width="300" height="250"/>
+    <rect class="head" x="60" y="820" width="300" height="54"/>
+    <text class="title" x="210" y="854" text-anchor="middle">coupons</text>
+    <text class="field" x="82" y="906">PK id : bigint</text>
+    <text class="field" x="82" y="936">name : varchar</text>
+    <text class="field" x="82" y="966">discount_type : varchar</text>
+    <text class="field" x="82" y="996">discount_value : int</text>
+    <text class="field" x="82" y="1026">min_order_amount : int</text>
+    <text class="field" x="82" y="1056">is_active : boolean</text>
+  </g>
+
+  <g id="member_coupons">
+    <rect class="table" x="430" y="820" width="320" height="250"/>
+    <rect class="head" x="430" y="820" width="320" height="54"/>
+    <text class="title" x="590" y="854" text-anchor="middle">member_coupons</text>
+    <text class="field" x="452" y="906">PK id : bigint</text>
+    <text class="field" x="452" y="936">FK member_id : bigint</text>
+    <text class="field" x="452" y="966">FK coupon_id : bigint</text>
+    <text class="field" x="452" y="996">status : varchar</text>
+    <text class="field" x="452" y="1026">issued_at : datetime</text>
+    <text class="field" x="452" y="1056">used_at : datetime</text>
+  </g>
+
+  <!-- PRODUCTS -->
+  <g id="categories">
+    <rect class="table" x="840" y="130" width="290" height="220"/>
+    <rect class="head" x="840" y="130" width="290" height="54"/>
+    <text class="title" x="985" y="164" text-anchor="middle">categories</text>
+    <text class="field" x="862" y="216">PK id : bigint</text>
+    <text class="field" x="862" y="246">parent_id : bigint</text>
+    <text class="field" x="862" y="276">name : varchar</text>
+    <text class="field" x="862" y="306">slug : varchar</text>
+    <text class="field" x="862" y="336">display_order : int</text>
+  </g>
+
+  <g id="products">
+    <rect class="table" x="830" y="430" width="340" height="340"/>
+    <rect class="head" x="830" y="430" width="340" height="54"/>
+    <text class="title" x="1000" y="464" text-anchor="middle">products</text>
+    <text class="field" x="852" y="516">PK id : bigint</text>
+    <text class="field" x="852" y="546">FK category_id : bigint</text>
+    <text class="field" x="852" y="576">name : varchar</text>
+    <text class="field" x="852" y="606">summary : varchar</text>
+    <text class="field" x="852" y="636">description : text</text>
+    <text class="field" x="852" y="666">price : int</text>
+    <text class="field" x="852" y="696">status : varchar</text>
+    <text class="field" x="852" y="726">is_sold_out : boolean</text>
+    <text class="field" x="852" y="756">created_at : datetime</text>
+  </g>
+
+  <g id="product_images">
+    <rect class="table" x="1210" y="130" width="310" height="220"/>
+    <rect class="head" x="1210" y="130" width="310" height="54"/>
+    <text class="title" x="1365" y="164" text-anchor="middle">product_images</text>
+    <text class="field" x="1232" y="216">PK id : bigint</text>
+    <text class="field" x="1232" y="246">FK product_id : bigint</text>
+    <text class="field" x="1232" y="276">image_url : varchar</text>
+    <text class="field" x="1232" y="306">image_type : varchar</text>
+    <text class="field" x="1232" y="336">display_order : int</text>
+  </g>
+
+  <g id="product_tags">
+    <rect class="table" x="1220" y="430" width="260" height="170"/>
+    <rect class="head" x="1220" y="430" width="260" height="54"/>
+    <text class="title" x="1350" y="464" text-anchor="middle">product_tags</text>
+    <text class="field" x="1242" y="516">PK id : bigint</text>
+    <text class="field" x="1242" y="546">name : varchar</text>
+    <text class="field" x="1242" y="576">slug : varchar</text>
+  </g>
+
+  <g id="tag_map">
+    <rect class="table" x="1220" y="650" width="300" height="160"/>
+    <rect class="head" x="1220" y="650" width="300" height="54"/>
+    <text class="title" x="1370" y="684" text-anchor="middle">product_tag_map</text>
+    <text class="field" x="1242" y="736">PK product_id : bigint</text>
+    <text class="field" x="1242" y="766">PK tag_id : bigint</text>
+  </g>
+
+  <!-- CART / ORDER -->
+  <g id="carts">
+    <rect class="table" x="830" y="860" width="290" height="190"/>
+    <rect class="head" x="830" y="860" width="290" height="54"/>
+    <text class="title" x="975" y="894" text-anchor="middle">carts</text>
+    <text class="field" x="852" y="946">PK id : bigint</text>
+    <text class="field" x="852" y="976">FK member_id : bigint</text>
+    <text class="field" x="852" y="1006">created_at : datetime</text>
+    <text class="field" x="852" y="1036">updated_at : datetime</text>
+  </g>
+
+  <g id="cart_items">
+    <rect class="table" x="1190" y="860" width="330" height="250"/>
+    <rect class="head" x="1190" y="860" width="330" height="54"/>
+    <text class="title" x="1355" y="894" text-anchor="middle">cart_items</text>
+    <text class="field" x="1212" y="946">PK id : bigint</text>
+    <text class="field" x="1212" y="976">FK cart_id : bigint</text>
+    <text class="field" x="1212" y="1006">FK product_id : bigint</text>
+    <text class="field" x="1212" y="1036">quantity : int</text>
+    <text class="field" x="1212" y="1066">unit_price : int</text>
+    <text class="field" x="1212" y="1096">delivery_type : varchar</text>
+  </g>
+
+  <g id="orders">
+    <rect class="table" x="830" y="1140" width="330" height="170"/>
+    <rect class="head" x="830" y="1140" width="330" height="54"/>
+    <text class="title" x="995" y="1174" text-anchor="middle">orders</text>
+    <text class="field" x="852" y="1226">PK id : bigint</text>
+    <text class="field" x="852" y="1256">FK member_id : bigint</text>
+    <text class="field" x="852" y="1286">order_no / status / total_amount</text>
+  </g>
+
+  <g id="order_items">
+    <rect class="table" x="1210" y="1140" width="310" height="170"/>
+    <rect class="head" x="1210" y="1140" width="310" height="54"/>
+    <text class="title" x="1365" y="1174" text-anchor="middle">order_items</text>
+    <text class="field" x="1232" y="1226">PK id : bigint</text>
+    <text class="field" x="1232" y="1256">FK order_id / product_id</text>
+    <text class="field" x="1232" y="1286">name / qty / price</text>
+  </g>
+
+  <g id="payment_delivery">
+    <rect class="table" x="1560" y="1030" width="210" height="280"/>
+    <rect class="head" x="1560" y="1030" width="210" height="54"/>
+    <text class="title" x="1665" y="1064" text-anchor="middle">payments</text>
+    <text class="field" x="1580" y="1116">PK id : bigint</text>
+    <text class="field" x="1580" y="1146">FK order_id</text>
+    <text class="field" x="1580" y="1176">provider</text>
+    <text class="field" x="1580" y="1206">status / amount</text>
+    <line class="line" x1="1560" y1="1230" x2="1770" y2="1230"/>
+    <text class="title" x="1665" y="1264" text-anchor="middle">deliveries</text>
+    <text class="field" x="1580" y="1296">FK order_id / address</text>
+  </g>
+
+  <!-- COMMUNITY -->
+  <g id="community">
+    <rect class="table" x="1560" y="430" width="210" height="260"/>
+    <rect class="head" x="1560" y="430" width="210" height="54"/>
+    <text class="title" x="1665" y="464" text-anchor="middle">reviews</text>
+    <text class="field" x="1580" y="516">PK id : bigint</text>
+    <text class="field" x="1580" y="546">FK member_id</text>
+    <text class="field" x="1580" y="576">FK product_id</text>
+    <text class="field" x="1580" y="606">rating / content</text>
+    <line class="line" x1="1560" y1="628" x2="1770" y2="628"/>
+    <text class="title" x="1665" y="662" text-anchor="middle">inquiries</text>
+    <text class="field" x="1580" y="690">FK member/product</text>
+  </g>
+
+  <!-- RELATION LINES -->
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 420 220 L 350 220"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 205 440 L 205 500"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 350 300 L 430 580"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 350 380 L 430 920"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 360 945 L 430 945"/>
+
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 985 350 L 1000 430"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 1170 520 L 1210 250"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 1170 690 L 1220 735"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 1350 600 L 1370 650"/>
+
+  <path class="line" marker-start="url(#one)" marker-end="url(#one)" d="M 350 430 L 830 955"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 1120 955 L 1190 985"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 1170 760 L 1190 1006"/>
+
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 350 410 L 830 1225"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 1160 1225 L 1210 1225"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 1170 740 L 1210 1260"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#one)" d="M 1160 1248 L 1560 1146"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#one)" d="M 1160 1280 L 1560 1296"/>
+
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 350 360 L 1560 545"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 1170 600 L 1560 576"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 350 390 L 1560 690"/>
+  <path class="line" marker-start="url(#one)" marker-end="url(#crow)" d="M 1170 630 L 1560 690"/>
+</svg>
