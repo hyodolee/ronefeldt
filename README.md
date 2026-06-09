@@ -31,7 +31,6 @@
 | Auth | **Local Login**, **Naver OAuth** |
 | Payment | **PortOne** |
 | Monitoring | **Sentry**, **Spring Boot Actuator** |
-| Future Plan | **Nginx Reverse Proxy**, **Blue/Green Deployment** |
 | Frontend | **HTML**, **CSS**, **JavaScript**, **Thymeleaf Fragment** |
 
 ## 주요 기능
