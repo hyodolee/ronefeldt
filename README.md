@@ -2,7 +2,7 @@
 
 독일 프리미엄 티 브랜드 **Ronnefeldt Teehaus** 쇼핑몰을 모티브로 개발한 **Spring Boot 기반 E-Commerce** 포트폴리오 프로젝트입니다.
 
-정적 HTML 페이지를 **Spring MVC + Thymeleaf** 아키텍처로 재구성하고, 상품 조회, 회원 관리, 장바구니, 주문·결제, 문의 게시판, OAuth 기반 소셜 로그인, 애플리케이션 모니터링, 원격 DB 연동 등 실제 서비스 수준의 핵심 기능을 구현하였습니다.
+정적 HTML 페이지를 **Spring MVC + Thymeleaf** 아키텍처로 재구성하고, **상품 조회**, **회원 관리**, **장바구니**, **주문·결제**, **문의 게시판**, **OAuth 기반 소셜 로그인**, **애플리케이션 모니터링**, **원격 DB 연동** 등 실제 서비스 수준의 핵심 기능을 구현하였습니다.
 
 특히 백엔드 중심의 설계와 개발에 집중하여 사용자 요청 처리, 비즈니스 로직 구현, 데이터 영속성 관리, 운영 환경 구성 및 모니터링까지 전 과정을 경험하며 **실무형 쇼핑몰 시스템 구축** 역량을 강화하였습니다.
 
@@ -12,28 +12,28 @@
 
 - 메인 랜딩 페이지
 - Store 상품 카테고리와 상품 상세 페이지
-- 회원가입 / 로그인 / 네이버 OAuth 로그인
-- 장바구니 / 주문서 / 결제 완료 흐름
-- 상품 문의 게시판
+- **회원가입 / 로그인 / 네이버 OAuth 로그인**
+- **장바구니 / 주문서 / 결제 완료 흐름**
+- **상품 문의 게시판**
 - 마이쇼핑 페이지
-- 운영 관점의 Sentry 모니터링, Actuator 헬스체크, Aiven MySQL 연동
-- Nginx Blue/Green 무중단 배포 설계
+- 운영 관점의 **Sentry 모니터링**, **Actuator 헬스체크**, **Aiven MySQL 연동**
+- 향후 구현 예정: **Nginx Blue/Green 무중단 배포**
 
 ## 사용 기술
 
 | 구분 | 기술 |
 | --- | --- |
-| Language | Java 21 |
-| Framework | Spring Boot 4.0.6 |
-| View | Thymeleaf |
-| Persistence | Spring Data JPA |
-| Database | MySQL(Aiven), H2(local/test) |
-| Build | Gradle |
-| Auth | Local Login, Naver OAuth |
-| Payment | PortOne |
-| Monitoring | Sentry, Spring Boot Actuator |
-| Deployment Plan | Nginx Reverse Proxy, Blue/Green Deployment |
-| Frontend | HTML, CSS, JavaScript, Thymeleaf Fragment |
+| Language | **Java 21** |
+| Framework | **Spring Boot 4.0.6** |
+| View | **Thymeleaf** |
+| Persistence | **Spring Data JPA** |
+| Database | **MySQL(Aiven)**, **H2(local/test)** |
+| Build | **Gradle** |
+| Auth | **Local Login**, **Naver OAuth** |
+| Payment | **PortOne** |
+| Monitoring | **Sentry**, **Spring Boot Actuator** |
+| Future Plan | **Nginx Reverse Proxy**, **Blue/Green Deployment** |
+| Frontend | **HTML**, **CSS**, **JavaScript**, **Thymeleaf Fragment** |
 
 ## 주요 기능
 
@@ -72,41 +72,41 @@
 
 ### 4. 회원 기능
 
-- 일반 회원가입
-- 일반 로그인
-- PBKDF2 기반 비밀번호 해시 저장
-- 네이버 OAuth 로그인
+- **일반 회원가입**
+- **일반 로그인**
+- **bcrypt 기반 비밀번호 해시 저장**
+- **네이버 OAuth 로그인**
 - 로그인 상태에 따라 햄버거 메뉴 내용 변경
 - 마이쇼핑 페이지 접근 제어
 
 ### 5. 장바구니 / 주문 / 결제
 
-- 로그인 사용자 기준 장바구니 생성
-- 상품 상세 페이지에서 장바구니 담기
+- 로그인 사용자 기준 **장바구니 생성**
+- 상품 상세 페이지에서 **장바구니 담기**
 - 헤더의 Cart 수량 실시간 반영
 - 국내배송 / 해외배송 탭
 - 주문서 생성
 - **PortOne** 결제창 호출
-- 결제 성공 후 주문 상태를 `PAID`로 변경
-- 결제 완료된 장바구니 아이템 삭제
-- 결제 내역 저장
+- **결제 성공** 후 주문 상태를 `PAID`로 변경
+- 결제 완료된 **장바구니 아이템 삭제**
+- **결제 내역 저장**
 
 ### 6. 커뮤니티 문의 게시판
 
-- 문의 목록
-- 문의 작성
-- 문의 상세 보기
+- **문의 목록**
+- **문의 작성**
+- **문의 상세 보기**
 - 작성자 본인 수정
 - 상품 상세 페이지에서 Q&A 작성 페이지로 이동
 
 ### 7. 운영 기능
 
-- Sentry 예외 모니터링 연동
-- 로컬 테스트용 Sentry 엔드포인트
-- Actuator 헬스체크
-- Aiven MySQL 연결 상태 확인용 엔드포인트
-- HikariCP 커넥션 풀 설정
-- Nginx Blue/Green 배포 설계 문서 제공
+- **Sentry 예외 모니터링** 연동
+- 로컬 테스트용 **Sentry 엔드포인트**
+- **Actuator 헬스체크**
+- **Aiven MySQL** 연결 상태 확인용 엔드포인트
+- **HikariCP 커넥션 풀** 설정
+- 향후 배포를 위한 **Nginx Blue/Green** 초안 문서 정리
 
 ## 주요 URL
 
@@ -196,37 +196,24 @@ ERD와 SQL은 `docs` 디렉터리에 정리되어 있습니다.
 - `docs/ronnefeldt-erd-simple.drawio`
 - `docs/ronnefeldt-erd-simple.svg`
 
-## 배포 설계
+## 향후 개선 계획
 
-무중단 배포는 Nginx Reverse Proxy 기반 Blue/Green 방식을 기준으로 설계했습니다.
+현재는 로컬 개발과 기능 구현 중심으로 구성되어 있으며, 이후 운영 환경 배포를 위해 다음 내용을 추가로 구현할 예정입니다.
 
-```text
-User -> Nginx -> Spring Boot
+- **Nginx Reverse Proxy** 기반 **Blue/Green 무중단 배포**
+- `/actuator/health`를 활용한 배포 전 상태 검증
+- 문제 발생 시 이전 버전으로 되돌리는 롤백 흐름
 
-blue  : 127.0.0.1:8081
-green : 127.0.0.1:8082
-```
-
-배포 흐름:
-
-1. 현재 버전은 blue 또는 green 중 하나에서 서비스
-2. 새 버전을 비활성 포트에 배포
-3. `/actuator/health`로 정상 여부 확인
-4. Nginx upstream을 새 버전으로 전환
-5. 문제 발생 시 이전 포트로 되돌려 롤백
-
-관련 문서:
+관련 초안 문서:
 
 - `docs/blue-green-deployment.md`
-- `deploy/nginx/ronnefeldt-blue-green.conf.example`
 
 ## 포트폴리오 포인트
 
-- 정적 HTML 화면을 Spring Boot MVC + Thymeleaf 구조로 전환
-- Thymeleaf Fragment를 이용한 공통 UI 재사용
-- JPA 기반 커머스 도메인 모델 구성
-- 장바구니 → 주문서 → 결제 → 장바구니 정리까지 실제 쇼핑몰 흐름 구현
-- Naver OAuth, PortOne, Sentry, Aiven MySQL 등 외부 서비스 연동 경험 반영
-- Actuator, HikariCP, Blue/Green 배포 설계 등 운영 관점 기능 포함
+- 정적 HTML 화면을 **Spring Boot MVC + Thymeleaf** 구조로 전환
+- **Thymeleaf Fragment**를 이용한 공통 UI 재사용
+- **JPA 기반 커머스 도메인 모델** 구성
+- **장바구니 → 주문서 → 결제 → 장바구니 정리**까지 실제 쇼핑몰 흐름 구현
+- **Naver OAuth**, **PortOne**, **Sentry**, **Aiven MySQL** 등 외부 서비스 연동 경험 반영
+- **Actuator**, **HikariCP** 등 운영 관점 기능과 **Blue/Green 배포 계획** 정리
 - 테스트 코드로 주요 사용자 흐름 검증
-

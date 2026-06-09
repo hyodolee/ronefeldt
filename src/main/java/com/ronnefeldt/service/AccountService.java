@@ -1,18 +1,12 @@
 package com.ronnefeldt.service;
 
 import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.util.Base64;
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 
 import com.ronnefeldt.entity.MemberEntity;
 import com.ronnefeldt.model.LoginUser;
 import com.ronnefeldt.repository.jpa.MemberJpaRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountService {
 
     private static final String LOCAL_PROVIDER = "LOCAL";
-    private static final int ITERATIONS = 120_000;
-    private static final int KEY_LENGTH = 256;
 
     private final MemberJpaRepository memberJpaRepository;
-    private final SecureRandom secureRandom = new SecureRandom();
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public AccountService(MemberJpaRepository memberJpaRepository) {
         this.memberJpaRepository = memberJpaRepository;
@@ -96,32 +88,11 @@ public class AccountService {
     }
 
     private String hashPassword(String password) {
-        byte[] salt = new byte[16];
-        secureRandom.nextBytes(salt);
-        byte[] hash = pbkdf2(password, salt);
-        return "PBKDF2$" + ITERATIONS + "$"
-            + Base64.getEncoder().encodeToString(salt) + "$"
-            + Base64.getEncoder().encodeToString(hash);
+        return passwordEncoder.encode(password);
     }
 
     private boolean verifyPassword(String password, String encoded) {
-        String[] parts = encoded.split("\\$");
-        if (parts.length != 4 || !"PBKDF2".equals(parts[0])) {
-            return false;
-        }
-        byte[] salt = Base64.getDecoder().decode(parts[2]);
-        byte[] expected = Base64.getDecoder().decode(parts[3]);
-        byte[] actual = pbkdf2(password, salt);
-        return java.security.MessageDigest.isEqual(expected, actual);
-    }
-
-    private byte[] pbkdf2(String password, byte[] salt) {
-        try {
-            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, KEY_LENGTH);
-            return SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256").generateSecret(spec).getEncoded();
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-            throw new IllegalStateException("비밀번호 암호화에 실패했습니다.", ex);
-        }
+        return passwordEncoder.matches(password, encoded);
     }
 
     private String require(String value, String message) {
